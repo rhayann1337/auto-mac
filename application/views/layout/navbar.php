@@ -43,7 +43,7 @@
                       </div>
                       <div>
                         <div class="small text-gray-500"><?php echo (new \DateTime())->format('d-m-Y'); ?></div>
-                        <span class="font-weight-bold">O produto <?php echo $material->nome ?> está acabando!</span>
+                        <span class="font-weight-bold">O produto <?php echo $material->nome_material ?> está acabando!</span>
                       </div>
                     </a>
                   <?php endforeach; ?>

@@ -97,7 +97,7 @@ class Core_model extends CI_Model {
     public function auto_complete_buscar_materiais($busca = NULL) {
         
         if ($busca) {
-            $this->db->like('nome', $busca, 'both');
+            $this->db->like('nome_material', $busca, 'both');
             $this->db->where('quantidade >', 0);
             return $this->db->get('materiais')->result();
             

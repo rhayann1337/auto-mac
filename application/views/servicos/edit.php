@@ -71,10 +71,9 @@ $this->load->view('layout/sidebar');
 
                                                 <tr>
                                                     <td><input type="hidden" name="material_id[]" value="<?php echo $material->id ?>" data-cell="A<?php echo $i; ?>" data-format="0" readonly></td>
-                                                    <td><input title="Nome" type="text" name="nome[]" value="<?php echo $material->nome ?>" class="nome form-control form-control-user input-sm" data-cell="B<?php echo $i; ?>" readonly></td>
+                                                    <td><input title="Nome" type="text" name="nome_material[]" value="<?php echo $material->nome_material ?>" class="nome_material form-control form-control-user input-sm" data-cell="B<?php echo $i; ?>" readonly></td>
                                                     <td><input title="Valor" name="valor_produto[]" value="<?php echo $material->valor_produto ?>" class="form-control form-control-user input-sm text-right money pr-1" data-cell="C<?php echo $i; ?>" data-format="R$ 0,0.00" readonly></td>
                                                     <td><input id="qtd" title="Quantidade" type="text" inputmode="numeric" pattern="[-+]?[0-9]*[.,]?[0-9]+" name="quantidade_produto[]" value="<?php echo $material->quantidade_produto ?>" class="qty form-control form-control-user text-center" data-cell="D<?php echo $i; ?>" data-format="0[.]00" required></td>
-                                                    <td><input title="Valor total" name="valor_total[]" value="<?php echo $material->valor_total ?>" class="form-control form-control-user input-sm text-right pr-1" data-cell="F<?php echo $i; ?>" data-format="R$ 0,0.00" data-formula="D<?php echo $i; ?>*(C<?php echo $i; ?>-(C<?php echo $i; ?>*E<?php echo $i; ?>))" readonly></td>
                                                     <td class="text-center"><button class="btn-remove btn btn-sm btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                                 <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                                                 <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -93,7 +92,7 @@ $this->load->view('layout/sidebar');
                                                 <label class="font-weight-bold pt-1" for="total">Total a pagar:</label>
                                             </td>
                                             <td class="text-right border-0">
-                                                <input type="text" name="ordem_servico_valor_total" class="form-control form-control-user text-right pr-1" data-format="$ 0,0.00" data-cell="G2" data-formula="SUM(F1:F5)" readonly="">
+                                                <input type="text" name="preco" class="form-control form-control-user text-right pr-1" data-format="$ 0,0.00" data-cell="G2" data-formula="SUM(C1:C5)" readonly="" >
                                             </td>
                                             <td class="border-0">&nbsp;</td>
                                         </tr>
@@ -145,13 +144,27 @@ $this->load->view('layout/sidebar');
                                         <?php echo form_error('data', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
 
+                                    
                                     <div class="col-sm-3 mb-1 mb-sm-0">
                                         <label class="small my-0">Valor total <span class="text-danger">*</span></label>
-                                        <input type="number" class="form-control" name="preco" value="<?php echo $servico->preco; ?>">
+                                        <input type="number" class="form-control" name="preco" value="<?php echo set_value('preco'); ?>">
                                         <?php echo form_error('preco', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
 
+                                    <div class="col-sm-3 mb-1 mb-sm-0">
+                <label>Serviço realizado através de orçamento?</label>
+
+                <select class="form-control" name="registro_orcamento">
+
+                  <option value="2">Sim</option>
+                  <option value="1">Não</option>
+
+                </select>
+
+              </div>
+
                                 </div>
+
 
                                 <div class="form-group row">
 

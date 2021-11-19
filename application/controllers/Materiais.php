@@ -34,11 +34,6 @@ class materiais extends CI_Controller
             'materiais' => $this->materiais_model->get_all(),
         );
 
-        // echo '<pre>';
-        // print_r($data['usuarios']);
-        // exit();
-
-
         $this->load->view('layout/header', $data);
         $this->load->view('materiais/index');
         $this->load->view('layout/footer');

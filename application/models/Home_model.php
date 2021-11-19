@@ -37,7 +37,7 @@ class Home_model extends CI_Model {
     }
 
     public function contar_quantidade_de_produtos() {
-        $this->db->select('(SELECT nome FROM materiais WHERE nome = "teste")', FALSE);
+        $this->db->select('(SELECT nome_material FROM materiais WHERE nome_material = "teste")', FALSE);
         
         return $this->db->get('materiais')->row();
     }

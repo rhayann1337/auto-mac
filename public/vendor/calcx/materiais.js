@@ -12,7 +12,7 @@ if ($counter > 0) {
 
     $('#table_produtos tr').each(function () {
 
-        var material = $(this).find("input.nome").val();
+        var material = $(this).find("input.nome_material").val();
 
         result_add = produtos_add.includes(material);
 
@@ -54,7 +54,7 @@ $(document).ready(function () {
                     if (data.response == "false") {
 
                         var result = [{
-                                label: 'Serviço não encontrado',
+                                label: 'Produto não encontrado',
                                 value: response.term
                             }];
                         response(result);
@@ -72,7 +72,7 @@ $(document).ready(function () {
                 return false;
             } else {
                 var id = ui.item.id;
-                var nome = ui.item.value;
+                var nome_material = ui.item.value;
                 var valor = ui.item.valor;
                 var quantidade = ui.item.quantidade;
                 valor = valor.replace('.', '');
@@ -80,7 +80,7 @@ $(document).ready(function () {
                 var i = ++$counter;
                 var markup = '<tr>\
                     <td><input type="hidden" name="material_id[]" value="' + id + '" data-cell="A' + i + '" data-format="0" readonly></td>\
-                    <td><input title="Nome" type="text" name="nome[]" value="' + nome + '" class="nome form-control form-control-user input-sm" data-cell="B' + i + '" readonly></td>\
+                    <td><input title="Nome" type="text" name="nome_material[]" value="' + nome_material + '" class="nome_material form-control form-control-user input-sm" data-cell="B' + i + '" readonly></td>\
                     <td><input title="Valor" name="valor_produto[]" value="' + valor + '" class="form-control form-control-user input-sm text-right money pr-1" data-cell="C' + i + '" data-format="R$ 0,0.00" readonly></td>\
                     <td><input title="Quantidade" type="text" inputmode="numeric" pattern="[-+]?[0-9]*[.,]?[0-9]+" name="quantidade_produto[]" value="" class="qty form-control form-control-user text-center" data-cell="D' + i + '" data-format="0[.]00" required></td>\
                     <td><input title="Valor total" name="valor_total[]" class="form-control form-control-user input-sm text-right pr-1" data-cell="F' + i + '" data-format="R$ 0,0.00" data-formula="D' + i + '*(C' + i + '-(C' + i + '*E' + i + '))" readonly></td>\
@@ -90,7 +90,7 @@ $(document).ready(function () {
 </svg></button></td>\
                 </tr>';
 
-                result_add = produtos_add.includes(nome);
+                result_add = produtos_add.includes(nome_material);
 
                 if (result_add == true) {
                     Swal.fire({
@@ -101,7 +101,7 @@ $(document).ready(function () {
                     })
                 } else {
                     $("table tbody").append(markup);
-                    produtos_add.push(nome);
+                    produtos_add.push(nome_material);
                 }
 
                 $("#qtd").keyup(function () {
@@ -128,7 +128,7 @@ $(document).ready(function () {
 /*Deleta o servico da ordem*/
 $('#lista_produtos').on('click', '.btn-remove', function () {
 
-    var material_remover = $(this).closest('tr').find("input.nome").val();
+    var material_remover = $(this).closest('tr').find("input.nome_material").val();
 
     $(this).parent().parent().remove();
 

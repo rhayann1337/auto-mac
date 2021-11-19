@@ -8,6 +8,7 @@ class Servicos_model extends CI_Model {
         $this->db->select([
             'servicos.*',
             'clientes.nome',
+            'clientes.sobrenome',
             'clientes.telefone_movel',
             'clientes.email',
             'clientes.placa',
@@ -26,7 +27,8 @@ class Servicos_model extends CI_Model {
         if ($id) {
             $this->db->select([
                 'servicos_produtos.*',
-                'materiais.nome',
+                'materiais.nome_material',
+                'materiais.valor',
             ]);
             $this->db->join('materiais', 'material_id = materiais.id', 'LEFT');
 
