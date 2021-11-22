@@ -46,29 +46,31 @@ class materiais extends CI_Controller
             redirect('materiais');
         } else {
 
-            $this->form_validation->set_rules('nome', 'Nome do produto', 'trim|required');
+            $this->form_validation->set_rules('nome_material', 'Nome do produto', 'trim|required');
             $this->form_validation->set_rules('valor', 'Valor do produto', 'trim|required');
             $this->form_validation->set_rules('fornecedor_id', 'Funcionario', 'trim|required');
             $this->form_validation->set_rules('quantidade', 'Quantide do produto', 'trim|required');
+            $this->form_validation->set_rules('quantidade_minima', 'Quantide minima estocada do produto', 'trim|required');
             $this->form_validation->set_rules('modelo', 'Modelo', 'trim|required');
             $this->form_validation->set_rules('material', 'Material', 'trim|required');
             $this->form_validation->set_rules('observacoes', 'Material', 'trim|required');
             $this->form_validation->set_rules('foto', 'Imagem', 'trim|required');
 
-        if ($this->form_validation->run()) {
+            if ($this->form_validation->run()) {
 
-            $data = elements(
-                array(
-                    'nome',
-                    'valor',
-                    'quantidade',
-                    'fornecedor_id',
-                    'modelo',
-                    'material',
-                    'foto',
-                    'observacoes',
-                ),
-                $this->input->post()
+                $data = elements(
+                    array(
+                        'nome_material',
+                        'valor',
+                        'quantidade',
+                        'quantidade_minima',
+                        'fornecedor_id',
+                        'modelo',
+                        'material',
+                        'foto',
+                        'observacoes',
+                    ),
+                    $this->input->post()
                 );
 
                 $data = html_escape($data);
@@ -104,10 +106,11 @@ class materiais extends CI_Controller
     public function add()
     {
 
-        $this->form_validation->set_rules('nome', 'Nome do produto', 'trim|required');
+        $this->form_validation->set_rules('nome_material', 'Nome do produto', 'trim|required');
         $this->form_validation->set_rules('valor', 'Valor do produto', 'trim|required');
         $this->form_validation->set_rules('fornecedor_id', 'fornecedor', 'trim|required');
         $this->form_validation->set_rules('quantidade', 'Quantide do produto', 'trim|required');
+        $this->form_validation->set_rules('quantidade_minima', 'Quantide minima estocada do produto', 'trim|required');
         $this->form_validation->set_rules('modelo', 'Modelo', 'trim|required');
         $this->form_validation->set_rules('material', 'Material', 'trim|required');
         $this->form_validation->set_rules('observacoes', 'Observações', 'trim|required');
@@ -117,9 +120,10 @@ class materiais extends CI_Controller
 
             $data = elements(
                 array(
-                    'nome',
+                    'nome_material',
                     'valor',
                     'quantidade',
+                    'quantidade_minima',
                     'fornecedor_id',
                     'modelo',
                     'material',

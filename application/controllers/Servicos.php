@@ -26,7 +26,7 @@ class Servicos extends CI_Controller
             'titulo' => 'Serviços Realizados',
             'styles' => array('https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css'),
             'scripts' => array(
-                'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js',
+                'public/vendor/datatables/jquery.dataTables.js',
                 'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
                 'public/vendor/mask/app.js',
@@ -35,7 +35,7 @@ class Servicos extends CI_Controller
             'servicos' => $this->servicos_model->get_all('servicos'),
             'clientes' => $this->core_model->get_all('clientes'),
             'funcionarios' => $this->core_model->get_all('funcionarios'),
-            
+
         );
 
         // echo '<pre>';
@@ -68,13 +68,13 @@ class Servicos extends CI_Controller
 
                 $data = elements(
                     array(
-                    'funcionario_id',
-                    'nome_servico',
-                    'cliente_id',
-                    'registro_orcamento',
-                    'data',
-                    'preco',
-                    'descricao'
+                        'funcionario_id',
+                        'nome_servico',
+                        'cliente_id',
+                        'registro_orcamento',
+                        'data',
+                        'preco',
+                        'descricao'
                     ),
                     $this->input->post()
                 );
@@ -82,9 +82,11 @@ class Servicos extends CI_Controller
                 $data = html_escape($data);
 
                 $this->core_model->update('servicos', $data, array('id' => $id));
-                
+
+                $id_teste = $id;
+
                 $this->servicos_model->deletar_materiais($id);
-                
+
                 $material_id = $this->input->post('material_id');
 
                 $material_quantidade = $this->input->post('quantidade_produto');
@@ -93,12 +95,12 @@ class Servicos extends CI_Controller
 
                 $qty_servico = count($material_id);
 
-                $servico = $this->input->post('id');
+                // $servico = $this->input->post('id');
 
                 for ($i = 0; $i < $qty_servico; $i++) {
 
                     $data = array(
-                        'servico_id' => $servico,
+                        'servico_id' => $id_teste,
                         'material_id' => $material_id[$i],
                         'quantidade_produto' => $material_quantidade[$i],
                         'valor_produto' => $material_preco[$i],
@@ -109,7 +111,7 @@ class Servicos extends CI_Controller
                     $this->core_model->insert('servicos_produtos', $data);
                 }
 
-                
+
                 // echo '<pre>';
                 // print_r($this->input->post());
                 // exit();
@@ -142,9 +144,9 @@ class Servicos extends CI_Controller
 
                 $servico = $data['servicos'] = $this->servicos_model->get_by_id($id);
 
-                echo '<pre>';
-                print_r($data['materiais']);
-                exit();
+                // echo '<pre>';
+                // print_r($this->input->post());
+                // exit();
 
                 $this->load->view('layout/header', $data);
                 $this->load->view('servicos/edit');
@@ -156,19 +158,19 @@ class Servicos extends CI_Controller
     public function add()
     {
 
-            $this->form_validation->set_rules('funcionario_id', 'Nome de quem realizou', 'required');
-            $this->form_validation->set_rules('nome_servico', 'Nome do serviço', 'required|min_length[5]|max_length[145]');
-            $this->form_validation->set_rules('cliente_id', 'Nome do cliente', 'required');
-            $this->form_validation->set_rules('registro_orcamento', 'Orçamento', 'required');
-            $this->form_validation->set_rules('data', 'Data do serviço', 'required');
-            $this->form_validation->set_rules('preco', 'Preço', 'required');
-            $this->form_validation->set_rules('descricao', 'Texto da ordem de serviço e venda', 'max_length[1000]');
+        $this->form_validation->set_rules('funcionario_id', 'Nome de quem realizou', 'required');
+        $this->form_validation->set_rules('nome_servico', 'Nome do serviço', 'required|min_length[5]|max_length[145]');
+        $this->form_validation->set_rules('cliente_id', 'Nome do cliente', 'required');
+        $this->form_validation->set_rules('registro_orcamento', 'Orçamento', 'required');
+        $this->form_validation->set_rules('data', 'Data do serviço', 'required');
+        $this->form_validation->set_rules('preco', 'Preço', 'required');
+        $this->form_validation->set_rules('descricao', 'Texto da ordem de serviço e venda', 'max_length[1000]');
 
 
-            if ($this->form_validation->run()) {
+        if ($this->form_validation->run()) {
 
-                $data = elements(
-                    array(
+            $data = elements(
+                array(
                     'funcionario_id',
                     'nome_servico',
                     'cliente_id',
@@ -176,140 +178,81 @@ class Servicos extends CI_Controller
                     'data',
                     'preco',
                     'descricao'
-                    ),
-                    $this->input->post()
+                ),
+                $this->input->post()
+            );
+
+            $data = html_escape($data);
+
+            $this->core_model->insert('servicos', $data, TRUE);
+
+            $servico = $this->session->userdata('last_id');
+
+
+
+            $id_servico = $servico;
+
+            $material_id = $this->input->post('material_id');
+
+            $material_quantidade = $this->input->post('quantidade_produto');
+
+            $material_preco = str_replace('R$', '', $this->input->post('valor_produto'));
+
+            $qty_servico = count($material_id);
+
+            for ($i = 0; $i < $qty_servico; $i++) {
+
+                $data = array(
+                    'servico_id' => $id_servico,
+                    'material_id' => $material_id[$i],
+                    'quantidade_produto' => $material_quantidade[$i],
+                    'valor_produto' => $material_preco[$i],
                 );
 
                 $data = html_escape($data);
 
-                $this->core_model->insert('servicos', $data, TRUE);
-
-                $servico = $this->session->userdata('last_id');
-
-                $id_servico = $servico;
-                
-                $material_id = $this->input->post('material_id');
-
-                $material_quantidade = $this->input->post('quantidade_produto');
-
-                $material_preco = str_replace('R$', '', $this->input->post('valor_produto'));
-
-                $qty_servico = count($material_id);
-
-                for ($i = 0; $i < $qty_servico; $i++) {
-
-                    $data = array(
-                        'servico_id' => $id_servico,
-                        'material_id' => $material_id[$i],
-                        'quantidade_produto' => $material_quantidade[$i],
-                        'valor_produto' => $material_preco[$i],
-                    );
-
-                    $data = html_escape($data);
-
-                    $this->core_model->insert('servicos_produtos', $data);
-                }
-
-                
-                // echo '<pre>';
-                // print_r($this->input->post());
-                // exit();
-
-                redirect('servicos');
-            } else {
-
-
-                $data = array(
-                    'titulo' => 'Registro de serviços',
-                    'styles' => array(
-                        base_url('public/vendor/select2/select2.min.css'),
-                        base_url('public/vendor/autocomplete/jquery-ui.css'),
-                        base_url('public/vendor/autocomplete/style.css'),
-                    ),
-                    'scripts' => array(
-                        base_url('public/vendor/autocomplete/jquery-migrate.js'),
-                        base_url('public/vendor/calcx/jquery-calx-sample-2.2.8.min.js'),
-                        base_url('public/vendor/calcx/materiais.js'),
-                        base_url('public/vendor/select2/select2.min.js'),
-                        base_url('public/vendor/select2/app.js'),
-                        base_url('public/vendor/sweetalert2/sweetalert2.js'),
-                        base_url('public/vendor/autocomplete/jquery-ui.js'),
-                    ),
-                    'materiais' => $this->servicos_model->get_all('materiais'),
-                    'clientes' => $this->core_model->get_all('clientes'),
-                    'funcionarios' => $this->core_model->get_all('funcionarios'),
-                );
-
-                // echo '<pre>';
-                // print_r($data['materiais']);
-                // exit();
-
-                $this->load->view('layout/header', $data);
-                $this->load->view('servicos/add');
-                $this->load->view('layout/footer');
+                $this->core_model->insert('servicos_produtos', $data);
             }
-        
+
+
+            // echo '<pre>';
+            // print_r($this->input->post());
+            // exit();
+
+            redirect('servicos');
+        } else {
+
+
+            $data = array(
+                'titulo' => 'Registro de serviços',
+                'styles' => array(
+                    base_url('public/vendor/select2/select2.min.css'),
+                    base_url('public/vendor/autocomplete/jquery-ui.css'),
+                    base_url('public/vendor/autocomplete/style.css'),
+                ),
+                'scripts' => array(
+                    base_url('public/vendor/autocomplete/jquery-migrate.js'),
+                    base_url('public/vendor/calcx/jquery-calx-sample-2.2.8.min.js'),
+                    base_url('public/vendor/calcx/materiais.js'),
+                    base_url('public/vendor/select2/select2.min.js'),
+                    base_url('public/vendor/select2/app.js'),
+                    base_url('public/vendor/sweetalert2/sweetalert2.js'),
+                    base_url('public/vendor/autocomplete/jquery-ui.js'),
+                ),
+                'materiais' => $this->servicos_model->get_all('materiais'),
+                'clientes' => $this->core_model->get_all('clientes'),
+                'funcionarios' => $this->core_model->get_all('funcionarios'),
+            );
+
+            // echo '<pre>';
+            // print_r($data['materiais']);
+            // exit();
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('servicos/add');
+            $this->load->view('layout/footer');
+        }
     }
-
-    // public function add()
-    // {
-
-    //     $this->form_validation->set_rules('funcionario_id', '', 'required');
-    //     $this->form_validation->set_rules('nome_servico', 'Nome do serviço', 'required|min_length[5]|max_length[145]');
-    //     $this->form_validation->set_rules('cliente_id', 'Nome do cliente', 'required');
-    //     $this->form_validation->set_rules('registro_orcamento', 'Orçamento', 'required');
-    //     $this->form_validation->set_rules('data', 'Data do serviço', 'required');
-    //     $this->form_validation->set_rules('preco', 'Preço', 'required');
-    //     $this->form_validation->set_rules('descricao', 'Texto da ordem de serviço e venda', 'max_length[1000]');
-
-
-    //     if ($this->form_validation->run()) {
-
-    //         $data = elements(
-    //             array(
-    //                 'funcionario_id',
-    //                 'nome_servico',
-    //                 'cliente_id',
-    //                 'registro_orcamento',
-    //                 'data',
-    //                 'preco',
-    //                 'descricao',
-    //                 'qtd_utilizada',
-    //             ),
-    //             $this->input->post()
-    //         );
-
-    //         $data = html_escape($data);
-
-    //         $this->core_model->insert('servicos', $data);
-
-    //         redirect('servicos');
-    //     } else {
-
-    //         $data = array(
-    //             'titulo' => 'Cadastrar Serviço',
-    //             'scripts' => array(
-    //                 'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js',
-    //                 'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js', 
-    //                 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
-    //                 'public/vendor/mask/app.js',
-    //             ),
-    //             'produtos' => $this->materiais_model->get_all(),
-    //             'clientes' => $this->core_model->get_all('clientes'),
-    //             'funcionarios' => $this->core_model->get_all('funcionarios'),
-    //         );
-
-    //         // echo '<pre>';
-    //         // print_r($data);
-    //         // exit();
-
-    //         $this->load->view('layout/header', $data);
-    //         $this->load->view('servicos/add');
-    //         $this->load->view('layout/footer');
-    //     }
-    // }
-
-    
 
     public function del($id = NULL)
     {
@@ -333,7 +276,7 @@ class Servicos extends CI_Controller
             $empresa = $this->core_model->get_by_id('oficina', array('id' => 1));
 
 
-            
+
             $servico = $this->servicos_model->get_by_id($id);
 
             $file_name = 'Serviço realizado Nº' . $servico->id;
@@ -393,7 +336,7 @@ class Servicos extends CI_Controller
 
             $materiais = $this->servicos_model->get_all_materiais_by_servicos($material_id);
 
-            foreach ($materiais as $key => $material):
+            foreach ($materiais as $key => $material) :
 
                 $html .= '<tr>';
                 $html .= '<td>' . intval($key + 1) . '</td>';

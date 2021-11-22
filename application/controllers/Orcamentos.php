@@ -56,7 +56,6 @@ class Orcamentos extends CI_Controller
 
             $this->form_validation->set_rules('cliente_id', 'Cliente', 'required');
             $this->form_validation->set_rules('funcionario_id', 'Funcionario', 'required');
-            $this->form_validation->set_rules('carro', 'Carro', 'required');
             $this->form_validation->set_rules('valor_total', 'Valor', 'required');
             $this->form_validation->set_rules('descricao', 'Texto da descrição de serviço', 'max_length[1000]');
 
@@ -67,8 +66,6 @@ class Orcamentos extends CI_Controller
                     array(
                         'cliente_id',
                         'funcionario_id',
-                        'carro',
-                        'placa',
                         'valor_total',
                         'descricao',
                     ),
@@ -78,6 +75,7 @@ class Orcamentos extends CI_Controller
                 $data = html_escape($data);
 
                 $this->core_model->update('orcamentos', $data, array('id' => $orcamento_id));
+
 
                 redirect('orcamentos');
             } else {
@@ -100,6 +98,10 @@ class Orcamentos extends CI_Controller
                     'orcamento' => $this->core_model->get_by_id('orcamentos', array('id' => $orcamento_id)),
                 );
 
+                // echo '<pre>';
+                // print_r($data['orcamento']);
+                // exit();
+
                 $this->load->view('layout/header', $data);
                 $this->load->view('orcamentos/edit');
                 $this->load->view('layout/footer');
@@ -112,7 +114,6 @@ class Orcamentos extends CI_Controller
 
         $this->form_validation->set_rules('cliente_id', 'Cliente', 'required');
         $this->form_validation->set_rules('funcionario_id', 'Funcionario', 'required');
-        $this->form_validation->set_rules('carro', 'Carro', 'required');
         $this->form_validation->set_rules('valor_total', 'Valor', 'required');
         $this->form_validation->set_rules('descricao', 'Texto da descrição de orçamentos', 'max_length[1000]');
 
@@ -125,8 +126,6 @@ class Orcamentos extends CI_Controller
                 array(
                     'cliente_id',
                     'funcionario_id',
-                    'carro',
-                    'placa',
                     'valor_total',
                     'descricao',
                 ),
@@ -214,7 +213,7 @@ class Orcamentos extends CI_Controller
                 . '<strong>Nome do cliente: </strong>' . $orcamento->nome . '<br/>' . '<br/>'
                 . '<strong>Nome de quem realizou o orçamento: </strong>' . $orcamento->nome_funcionario . '<br/>' . '<br/>'
                 . '<strong>Placa do veículo: </strong>' . $orcamento->placa . '<br/>' . '<br/>'
-                . '<strong>Modelo do veículo: </strong>' . $orcamento->carro . '<br/>' . '<br/>'
+                . '<strong>Modelo do veículo: </strong>' . $orcamento->veiculo . '<br/>' . '<br/>'
                 . '<strong>Celular: </strong>' . $orcamento->telefone_movel . '<br/>' . '<br/>'
                 . '<strong>Data: </strong>' . formata_data_banco_sem_hora($orcamento->data) . '<br/>' . '<br/>'
                 . '<strong>Preço: </strong>R$' . $orcamento->valor_total . '<br/>' . '<br/>'
