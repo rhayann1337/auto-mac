@@ -178,7 +178,7 @@ $this->load->view('layout/sidebar');
                                                     </p>
                                                     <hr>
                                                     <h5>Valor</h5>
-                                                    <p class="money">R$ <?php echo $servico->preco ?></p>
+                                                    <p>R$ <?php echo number_format($servico->preco, 2, ",", ".") ?></p>
                                                     <hr>
                                                     <h5>Descrição do serviço</h5>
                                                     <p><?php echo $servico->descricao ?></p>

@@ -120,7 +120,7 @@ $this->load->view('layout/sidebar');
 
                         <div class="form-group row mb-3">
 
-                            <div class="col-md-4" style="margin-top: 48px;">
+                            <div class="col-md-4">
                                 <label>Imagem</label>
                                 <input type="file" name="foto" />
                                 <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>

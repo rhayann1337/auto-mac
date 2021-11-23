@@ -61,7 +61,7 @@ $this->load->view('layout/sidebar');
 
                                     <div class="containerInput">
                                         <a>Funcionario</a>
-                                        <select class="form-control" name="cliente_id">
+                                        <select class="form-control" name="funcionario_id">
                                             <?php foreach ($funcionarios as $funcionario) : ?>
                                             <option value="<?php echo $funcionario->id; ?>"
                                                 <?php echo ($funcionario->id != NULL) ? 'selected' : ''; ?>>

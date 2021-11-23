@@ -50,6 +50,8 @@ class Orcamentos_model extends CI_Model
             'clientes.nome',
             'clientes.telefone_movel',
             'clientes.email',
+            'clientes.placa',
+            'clientes.veiculo',
             'funcionarios.id',
             'funcionarios.nome_funcionario',
             'funcionarios.sobrenome'

@@ -21,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -55,21 +55,12 @@ $this->load->view('layout/sidebar');
                             </div>
 
                             <div class="col-md-4">
-                                <label>CPF</label>
-                                <input type="text" class="form-control cpf" name="cpf" placeholder="Cpf"
-                                    value="<?php echo $cliente->cpf ?>">
-                                <?php echo form_error('cpf', '<small class="form-text text-danger">', '</small>'); ?>
-
-                            </div>
-
-                            <div class="col-md-4">
                                 <label>E-mail </label>
                                 <input type="email" class="form-control" name="email" placeholder="Email"
                                     value="<?php echo $cliente->email ?>">
                                 <?php echo form_error('email', '<small class="form-text text-danger">', '</small>'); ?>
 
                             </div>
-
                         </div>
 
 
@@ -95,7 +86,7 @@ $this->load->view('layout/sidebar');
 
                                 <label>Sexo</label>
 
-                                <select class="form-control" name="active">
+                                <select class="form-control" name="sexo">
 
                                     <option value="0">Masculino</option>
                                     <option value="1">Feminino</option>

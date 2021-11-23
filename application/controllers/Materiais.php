@@ -55,13 +55,13 @@ class materiais extends CI_Controller
             $this->form_validation->set_rules('quantidade_minima', 'Quantide minima estocada do produto', 'trim|required');
             $this->form_validation->set_rules('modelo', 'Modelo', 'trim|required');
             $this->form_validation->set_rules('material', 'Material', 'trim|required');
-            $this->form_validation->set_rules('observacoes', 'Material', 'trim|required');
+            $this->form_validation->set_rules('observacoes', 'Material', 'trim');
 
             if ($this->form_validation->run()) {
 
                 $config['upload_path'] = "assets/imagens/materiais/";
                 $config['max_size'] = 2048;
-                $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+                $config["allowed_types"] = "gif|jpg|jpeg|png|svg|jfif";
 
                 $this->upload->initialize($config);
 
@@ -141,13 +141,13 @@ class materiais extends CI_Controller
         $this->form_validation->set_rules('quantidade_minima', 'Quantide minima estocada do produto', 'trim|required');
         $this->form_validation->set_rules('modelo', 'Modelo', 'trim|required');
         $this->form_validation->set_rules('material', 'Material', 'trim|required');
-        $this->form_validation->set_rules('observacoes', 'Observações', 'trim|required');
+        $this->form_validation->set_rules('observacoes', 'Observações', 'trim');
 
         if ($this->form_validation->run()) {
 
             $config['upload_path'] = "assets/imagens/materiais/";
             $config['max_size'] = 2048;
-            $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+            $config["allowed_types"] = "gif|jpg|jpeg|png|svg|jfif";
 
             $this->upload->initialize($config);
 

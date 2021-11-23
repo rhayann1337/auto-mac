@@ -99,7 +99,7 @@ class Orcamentos extends CI_Controller
                 );
 
                 // echo '<pre>';
-                // print_r($data['orcamento']);
+                // print_r($this->input->post());
                 // exit();
 
                 $this->load->view('layout/header', $data);

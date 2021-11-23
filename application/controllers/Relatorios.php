@@ -84,6 +84,7 @@ class Relatorios extends CI_Controller
                 $html .= '<th style="font-size: 16px">Número do serviço</th>';
                 $html .= '<th style="font-size: 16px">Data</th>';
                 $html .= '<th style="font-size: 16px">Cliente</th>';
+                $html .= '<th style="font-size: 16px">Funcionário</th>';
                 $html .= '<th style="font-size: 16px">Tipo de serviço</th>';
                 $html .= '<th style="font-size: 16px">Valor total</th>';
 
@@ -97,8 +98,9 @@ class Relatorios extends CI_Controller
                     $html .= '<tr>';
                     $html .= '<td>' . $servico->id . '</td>';
                     $html .= '<td>' . formata_data_banco_sem_hora($servico->data) . '</td>';
-                    $html .= '<td>' . $servico->nome_cliente . '</td>';
                     $html .= '<td>' . $servico->nome . '</td>';
+                    $html .= '<td>' . $servico->nome_funcionario . '</td>';
+                    $html .= '<td>' . $servico->nome_servico . '</td>';
                     $html .= '<td>' . 'R$&nbsp;' . number_format($servico->preco, 2, ",", ".") . '</td>';
                     $html .= '</tr>';
 
@@ -109,7 +111,7 @@ class Relatorios extends CI_Controller
                 $html .= '<td style="border-top: solid #ddd 1px"><strong>Quantidade de serviços realizados</strong></td>';
                 $html .= '<td style="border-top: solid #ddd 1px">' . '&nbsp;' . $quantidade_total->id . '</td>';
                 $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . number_format($preco_total->preco, 2, ",", ".") . '</td>';
+                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $preco_total->preco . '</td>';
 
                 $html .= '</th>';
 
@@ -214,7 +216,7 @@ class Relatorios extends CI_Controller
                     $html .= '<tr>';
                     $html .= '<td>' . $orcamento->nome_funcionario . '</td>';
                     $html .= '<td>' . $orcamento->placa . '</td>';
-                    $html .= '<td>' . $orcamento->carro . '</td>';
+                    $html .= '<td>' . $orcamento->veiculo . '</td>';
                     $html .= '<td>' . formata_data_banco_sem_hora($orcamento->data) . '</td>';
                     $html .= '<td>' . 'R$&nbsp;' . number_format($orcamento->valor_total, 2, ",", ".") . '</td>';
                     $html .= '</tr>';

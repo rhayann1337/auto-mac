@@ -24,9 +24,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -82,7 +82,7 @@ $this->load->view('layout/sidebar');
                                 <tr>
                                     <th>#</th>
                                     <th>Nome</th>
-                                    <th>CPF</th>
+                                    <th>Email</th>
                                     <th>Celular</th>
                                     <th>Veiculo</th>
                                     <th>Placa</th>
@@ -94,7 +94,7 @@ $this->load->view('layout/sidebar');
                                 <tr>
                                     <td><?php echo $cliente->id ?></td>
                                     <td><?php echo $cliente->nome ?></td>
-                                    <td class="cpf"><?php echo $cliente->cpf ?></td>
+                                    <td><?php echo $cliente->email ?></td>
                                     <td class="sp_celphones"><?php echo $cliente->telefone_movel ?></td>
                                     <td><?php echo $cliente->veiculo ?></td>
                                     <td><?php echo $cliente->placa ?></td>
@@ -151,9 +151,6 @@ $this->load->view('layout/sidebar');
                                                     <p><?php echo $cliente->nome ?> <?php echo $cliente->sobrenome ?>
                                                     </p>
                                                     <hr>
-                                                    <h5>CPF</h5>
-                                                    <p class="cpf"><?php echo $cliente->cpf ?></p>
-                                                    <hr>
                                                     <h5>Email</h5>
                                                     <p><?php echo $cliente->email ?></p>
                                                     <hr>
@@ -175,8 +172,9 @@ $this->load->view('layout/sidebar');
                                                     <h5>Placa</h5>
                                                     <p><?php echo $cliente->placa ?></p>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button class="btn btn-secondary" type="button"
+                                                <div class="modal-footer"
+                                                    style="display: flex; align-items: center; justify-content: center;">
+                                                    <button style="width: 300px;" class="btn btn-primary" type="button"
                                                         data-dismiss="modal">Ok</button>
                                                 </div>
                                             </div>

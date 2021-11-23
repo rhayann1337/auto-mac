@@ -7,15 +7,14 @@ class Usuarios extends CI_Controller
 {
 
     public function __construct()
-	{
-		parent::__construct();
+    {
+        parent::__construct();
 
-		if (!$this->ion_auth->logged_in()) {
-			$this->session->set_flashdata('info', 'Sessão expirada');
-			redirect('login');
-		}
-
-	}
+        if (!$this->ion_auth->logged_in()) {
+            $this->session->set_flashdata('info', 'Sessão expirada');
+            redirect('login');
+        }
+    }
 
 
     public function index()
@@ -62,34 +61,35 @@ class Usuarios extends CI_Controller
             if ($this->form_validation->run()) {
 
 
-				$data = elements(
-					array(
-						'first_name',
-						'last_name',
-						'email',
-						'username',
-						'active',
-						'password'
-					), $this->input->post()
-				);
+                $data = elements(
+                    array(
+                        'first_name',
+                        'last_name',
+                        'email',
+                        'username',
+                        'active',
+                        'password'
+                    ),
+                    $this->input->post()
+                );
 
-				$data = $this->security->xss_clean($data);
+                $data = $this->security->xss_clean($data);
 
-				$password = $this->input->post('password');
+                $password = $this->input->post('password');
 
-				if (!$password) {
+                if (!$password) {
 
-					unset($data['password']);
-				}
+                    unset($data['password']);
+                }
 
 
-				if ($this->ion_auth->update($user_id, $data)) {
+                if ($this->ion_auth->update($user_id, $data)) {
 
-					$this->session->set_flashdata('sucesso', 'Dados salvos com sucesso');
-				} else {
-					$this->session->set_flashdata('error', 'Erro ao salvar os dados');
-				}
-				redirect('usuarios');
+                    $this->session->set_flashdata('sucesso', 'Dados salvos com sucesso');
+                } else {
+                    $this->session->set_flashdata('error', 'Erro ao salvar os dados');
+                }
+                redirect('usuarios');
             } else {
                 $data = array(
                     'titulo' => 'Editar usuário',
@@ -139,62 +139,62 @@ class Usuarios extends CI_Controller
     }
 
     public function add()
-	{
+    {
 
         if (!$this->ion_auth->is_admin()) {
             $this->session->set_flashdata('error', 'Apenas administradores podem cadastrar novos usuários.');
             redirect('usuarios');
         }
 
-		$this->form_validation->set_rules('first_name', '', 'trim|required');
-		$this->form_validation->set_rules('last_name', '', 'trim|required');
-		$this->form_validation->set_rules('email', '', 'trim|required|valid_email|is_unique[users.email]');
-		$this->form_validation->set_rules('username', '', 'trim|required|is_unique[users.username]');
-		$this->form_validation->set_rules('password', 'Senha', 'required|min_length[5] |max_length[255]');
-		$this->form_validation->set_rules('confirm_password', 'Confirme', 'matches[password]');
+        $this->form_validation->set_rules('first_name', '', 'trim|required');
+        $this->form_validation->set_rules('last_name', '', 'trim|required');
+        $this->form_validation->set_rules('email', '', 'trim|required|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('username', '', 'trim|required|is_unique[users.username]');
+        $this->form_validation->set_rules('password', 'Senha', 'required|min_length[5] |max_length[255]');
+        $this->form_validation->set_rules('confirm_password', 'Confirme', 'matches[password]');
 
-		if ($this->form_validation->run()) {
+        if ($this->form_validation->run()) {
 
-			$username = $this->security->xss_clean($this->input->post('username'));
-			$password = $this->security->xss_clean($this->input->post('password'));
-			$email = $this->security->xss_clean($this->input->post('email'));
-			$additional_data = array(
-				'first_name' => $this->input->post('first_name'),
-				'last_name' => $this->input->post('last_name'),
-				'username' => $this->input->post('username'),
-				'active' => $this->input->post('active'),
-			);
-			$additional_data = $this->security->xss_clean($additional_data);
+            $username = html_escape($this->input->post('username'));
+            $password = html_escape($this->input->post('password'));
+            $email = html_escape($this->input->post('email'));
+            $additional_data = array(
+                'first_name' => $this->input->post('first_name'),
+                'last_name' => $this->input->post('last_name'),
+                'username' => $this->input->post('username'),
+                'active' => $this->input->post('active'),
+            );
+            $group = array($this->input->post('tipo_usuario'));
 
-			if ($this->ion_auth->register($username, $password, $email, $additional_data)) {
+            $additional_data = html_escape($additional_data);
+            $group = html_escape($group);
 
-				$this->session->set_flashdata('sucesso', 'Dados salvos com sucesso');
 
-			} else {
-				$this->session->set_flashdata('error', 'Erro ao salvar os dados');
-			}
+            if ($this->ion_auth->register($username, $password, $email, $additional_data, $group)) {
 
-			redirect('usuarios');
+                $this->session->set_flashdata('sucesso', 'Dados salvos com sucesso');
+            } else {
+                $this->session->set_flashdata('error', 'Erro ao salvar os dados');
+            }
 
-		} else {
+            redirect('usuarios');
+        } else {
 
-			$data = array(
-				'titulo' => 'Cadastrar usuário',
+            $data = array(
+                'titulo' => 'Cadastrar usuário',
                 'scripts' => array(
                     'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js',
                     'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js',
                     'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
                     'public/vendor/mask/app.js',
                 ),
-			);
+            );
 
-			$this->load->view('layout/header', $data);
-			$this->load->view('usuarios/add');
-			$this->load->view('layout/footer');
-
-		}
-
-	}
+            $this->load->view('layout/header', $data);
+            $this->load->view('usuarios/add');
+            $this->load->view('layout/footer');
+        }
+    }
 
     public function del($user_id = NULL)
     {

@@ -93,7 +93,13 @@ class Servicos_model extends CI_Model
     {
         $this->db->select([
             'servicos.*',
+            'clientes.nome',
+            'clientes.placa',
+            'clientes.veiculo',
+            'funcionarios.nome_funcionario',
         ]);
+        $this->db->join('clientes', 'servicos.cliente_id = clientes.id', 'LEFT');
+        $this->db->join('funcionarios', 'servicos.funcionario_id = funcionarios.id', 'LEFT');
 
         if ($data_inicial && $data_final) {
 

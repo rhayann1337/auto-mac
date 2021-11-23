@@ -140,37 +140,38 @@ $this->load->view('layout/sidebar');
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Informações do
-                                                        serviço</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Orçamento número
+                                                        <?php echo $orcamento->id ?></h5>
                                                     <button class="close" type="button" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">×</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <h5>Registro de orçamento</h5>
-                                                    <!-- <p><?php echo $servico->id ?></p>
-                            <hr>
-                            <h5>Nome do serviço</h5>
-                            <p><?php echo $servico->nome ?></p>
-                            <hr>
-                            <h5>Nome do responsável</h5>
-                            <p><?php echo $servico->nome_responsavel ?></p>
-                            <hr>
-                            <h5>Nome do cliente</h5>
-                            <p><?php echo $servico->nome_cliente ?></p>
-                            <hr>
-                            <h5>Telefone do cliente</h5>
-                            <p><?php echo $servico->telefone_cliente ?></p>
-                            <hr>
-                            <h5>Placa do veículo</h5>
-                            <p><?php echo $servico->placa_carro ?></p>
-                            <hr>
-                            <h5>Valor</h5>
-                            <p>R$ <?php echo $servico->preco ?></p>
-                            <hr>
-                            <h5>Descrição do serviço</h5>
-                            <p><?php echo $servico->descricao ?></p> -->
+                                                    <h5>Nome do funcionário responsável</h5>
+                                                    <p><?php echo $orcamento->nome_funcionario ?></p>
+                                                    <hr>
+                                                    <h5>Nome do cliente</h5>
+                                                    <p><?php echo $orcamento->nome ?></p>
+                                                    <hr>
+                                                    <h5>Telefone do cliente</h5>
+                                                    <p class="sp_celphones"><?php echo $orcamento->telefone_movel ?></p>
+                                                    <hr>
+                                                    <h5>Placa - veículo</h5>
+                                                    <p><?php echo $orcamento->placa ?> -
+                                                        <?php echo $orcamento->veiculo ?>
+                                                    </p>
+                                                    <hr>
+                                                    <h5>Data</h5>
+                                                    <p><?php echo formata_data_banco_com_hora($orcamento->data); ?></p>
+                                                    <hr>
+                                                    <h5>Valor</h5>
+                                                    <p>R$
+                                                        <?php echo number_format($orcamento->valor_total, 2, ",", "."); ?>
+                                                    </p>
+                                                    <hr>
+                                                    <h5>Descrição do serviço</h5>
+                                                    <p><?php echo $orcamento->descricao ?></p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary" type="button"

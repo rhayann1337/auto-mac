@@ -38,24 +38,22 @@ class Clientes extends CI_Controller
         $this->load->view('layout/footer');
     }
 
-    public function edit($cliente_id = NULL)
+    public function edit($id = NULL)
     {
-
-        if (!$cliente_id || !$this->ion_auth->user($cliente_id)->row()) {
+        if (!$id || !$this->core_model->get_by_id('clientes', array('id' => $id))) {
             $this->session->set_flashdata('error', 'Cliente não encontrado');
             redirect('clientes');
         } else {
 
-            $this->form_validation->set_rules('nome', '', 'trim|required');
-            $this->form_validation->set_rules('sobrenome', '', 'trim|required');
-            $this->form_validation->set_rules('cpf', 'Senha', 'min_length[11] |max_length[14]');
-            $this->form_validation->set_rules('email', '', 'trim|required');
-            $this->form_validation->set_rules('telefone_fixo', '', 'trim|required');
-            $this->form_validation->set_rules('telefone_movel', '', 'trim|required');
-            $this->form_validation->set_rules('endereco', '', 'trim|required');
-            $this->form_validation->set_rules('sexo', '', 'trim|required');
-            $this->form_validation->set_rules('veiculo', '', 'trim|required');
-            $this->form_validation->set_rules('placa', '', 'trim|required');
+            $this->form_validation->set_rules('nome', 'Nome', 'trim|required');
+            $this->form_validation->set_rules('sobrenome', 'Sobrenome', 'trim|required');
+            $this->form_validation->set_rules('email', 'Email', 'trim|required');
+            $this->form_validation->set_rules('telefone_fixo', 'Telefone', 'trim|required');
+            $this->form_validation->set_rules('telefone_movel', 'Celular', 'trim|required');
+            $this->form_validation->set_rules('endereco', 'Endereço', 'trim|required');
+            $this->form_validation->set_rules('sexo', 'Sexo', 'trim|required');
+            $this->form_validation->set_rules('veiculo', 'Veículo', 'trim|required');
+            $this->form_validation->set_rules('placa', 'Placa', 'trim|required');
 
             if ($this->form_validation->run()) {
 
@@ -64,7 +62,6 @@ class Clientes extends CI_Controller
                     array(
                         'nome',
                         'sobrenome',
-                        'cpf',
                         'email',
                         'telefone_fixo',
                         'telefone_movel',
@@ -76,22 +73,11 @@ class Clientes extends CI_Controller
                     $this->input->post()
                 );
 
-                $data = $this->security->xss_clean($data);
-
-                $password = $this->input->post('password');
-
-                if (!$password) {
-
-                    unset($data['password']);
-                }
 
 
-                if ($this->ion_auth->update($cliente_id, $data)) {
 
-                    $this->session->set_flashdata('sucesso', 'Dados salvos com sucesso');
-                } else {
-                    $this->session->set_flashdata('error', 'Erro ao salvar os dados');
-                }
+                $this->core_model->update('clientes', $data, array('id' => $id));
+
                 redirect('clientes');
             } else {
                 $data = array(
@@ -102,8 +88,12 @@ class Clientes extends CI_Controller
                         'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
                         base_url('public/vendor/mask/app.js'),
                     ),
-                    'cliente' => $this->core_model->get_by_id('clientes', array('id' => $cliente_id)),
+                    'cliente' => $this->core_model->get_by_id('clientes', array('id' => $id)),
                 );
+
+                // echo '<pre>';
+                // print_r($this->input->post());
+                // exit();
 
                 $this->load->view('layout/header', $data);
                 $this->load->view('clientes/edit');
@@ -112,13 +102,13 @@ class Clientes extends CI_Controller
         }
     }
 
-    public function cpf_check($cpf)
+    public function email_check($email)
     {
-        $cliente_id = $this->input->post('cliente_id');
+        $id = $this->input->post('id');
 
-        if ($this->core_model->get_by_id('clientes', array('cpf' => $cpf, 'id !=' => $cliente_id))) {
+        if ($this->core_model->get_by_id('clientes', array('email' => $email, 'id !=' => $id))) {
 
-            $this->form_validation->set_message('cpf_check', 'Esse cpf já está cadastrado');
+            $this->form_validation->set_message('email_check', 'Esse cliente já está cadastrado');
 
             return FALSE;
         } else {
@@ -131,8 +121,7 @@ class Clientes extends CI_Controller
 
         $this->form_validation->set_rules('nome', '', 'trim|required');
         $this->form_validation->set_rules('sobrenome', '', 'trim|required');
-        $this->form_validation->set_rules('cpf', 'cpf', 'min_length[11]|max_length[14]|is_unique[clientes.cpf]');
-        $this->form_validation->set_rules('email', '', 'trim|required');
+        $this->form_validation->set_rules('email', '', 'trim|required|is_unique[clientes.email]');
         $this->form_validation->set_rules('telefone_fixo', '', 'trim|required');
         $this->form_validation->set_rules('telefone_movel', '', 'trim|required');
         $this->form_validation->set_rules('endereco', '', 'trim|required');
@@ -146,7 +135,6 @@ class Clientes extends CI_Controller
                 array(
                     'nome',
                     'sobrenome',
-                    'cpf',
                     'email',
                     'telefone_fixo',
                     'telefone_movel',
@@ -182,21 +170,15 @@ class Clientes extends CI_Controller
         }
     }
 
-    public function del($cliente_id = NULL)
+    public function del($id = NULL)
     {
 
-
-
-        if (!$cliente_id || !$this->ion_auth->user($cliente_id)->row()) {
+        if (!$id || !$this->core_model->get_by_id('clientes', array('id' => $id))) {
             $this->session->set_flashdata('error', 'Cliente não encontrado');
             redirect('clientes');
-        }
-
-        if ($this->ion_auth->delete_user($cliente_id)) {
-            $this->session->set_flashdata('sucesso', 'Cliente excluído com sucesso');
-            redirect('clientes');
         } else {
-            $this->session->set_flashdata('error', 'Cliente não pode ser excluído');
+            $this->core_model->delete('clientes', array('id' => $id));
+            $this->session->set_flashdata('sucesso', 'Cliente excluído com sucesso!');
             redirect('clientes');
         }
     }

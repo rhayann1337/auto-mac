@@ -139,7 +139,7 @@ $this->load->view('layout/sidebar');
 
                                     <div class="col-sm-3 mb-1 mb-sm-0">
                                         <label class="small my-0">Valor total <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control money" name="preco"
+                                        <input type="text" class="form-control" name="preco"
                                             value="<?php echo set_value('preco'); ?>">
                                         <?php echo form_error('preco', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
