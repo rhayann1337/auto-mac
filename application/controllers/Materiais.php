@@ -41,6 +41,8 @@ class materiais extends CI_Controller
 
     public function edit($id = NULL)
     {
+        $this->load->library('upload');
+
         if (!$id || !$this->core_model->get_by_id('materiais', array('id' => $id))) {
             $this->session->set_flashdata('error', 'Produto não encontrado');
             redirect('materiais');
@@ -54,26 +56,51 @@ class materiais extends CI_Controller
             $this->form_validation->set_rules('modelo', 'Modelo', 'trim|required');
             $this->form_validation->set_rules('material', 'Material', 'trim|required');
             $this->form_validation->set_rules('observacoes', 'Material', 'trim|required');
-            $this->form_validation->set_rules('foto', 'Imagem', 'trim|required');
 
             if ($this->form_validation->run()) {
 
-                $data = elements(
+                $config['upload_path'] = "assets/imagens/materiais/";
+                $config['max_size'] = 2048;
+                $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+
+                $this->upload->initialize($config);
+
+                $contem_foto = $this->upload->do_upload('foto');
+
+                $this->upload->do_upload('foto');
+
+                $arquivo = $this->upload->data('file_name');
+
+                $url_imagem = base_url($config['upload_path'] . $arquivo);
+
+                $nome_material = $this->input->post('nome_material');
+                $valor = $this->input->post('valor');
+                $fornecedor_id = $this->input->post('fornecedor_id');
+                $quantidade = $this->input->post('quantidade');
+                $quantidade_minima = $this->input->post('quantidade_minima');
+                $modelo = $this->input->post('modelo');
+                $material = $this->input->post('material');
+                $observacoes = $this->input->post('observacoes');
+
+                $data =
                     array(
-                        'nome_material',
-                        'valor',
-                        'quantidade',
-                        'quantidade_minima',
-                        'fornecedor_id',
-                        'modelo',
-                        'material',
-                        'foto',
-                        'observacoes',
-                    ),
-                    $this->input->post()
-                );
+                        'nome_material' => $nome_material,
+                        'valor' => $valor,
+                        'fornecedor_id' => $fornecedor_id,
+                        'quantidade' => $quantidade,
+                        'quantidade_minima' => $quantidade_minima,
+                        'modelo' => $modelo,
+                        'material' => $material,
+                        'observacoes' => $observacoes,
+                        'foto' => $url_imagem
+                    );
 
                 $data = html_escape($data);
+
+                if (!$contem_foto) {
+
+                    unset($data['foto']);
+                }
 
                 $this->core_model->update('materiais', $data, array('id' => $id));
 
@@ -105,6 +132,7 @@ class materiais extends CI_Controller
 
     public function add()
     {
+        $this->load->library('upload');
 
         $this->form_validation->set_rules('nome_material', 'Nome do produto', 'trim|required');
         $this->form_validation->set_rules('valor', 'Valor do produto', 'trim|required');
@@ -114,24 +142,42 @@ class materiais extends CI_Controller
         $this->form_validation->set_rules('modelo', 'Modelo', 'trim|required');
         $this->form_validation->set_rules('material', 'Material', 'trim|required');
         $this->form_validation->set_rules('observacoes', 'Observações', 'trim|required');
-        $this->form_validation->set_rules('foto', 'Imagem', 'trim|required');
 
         if ($this->form_validation->run()) {
 
-            $data = elements(
+            $config['upload_path'] = "assets/imagens/materiais/";
+            $config['max_size'] = 2048;
+            $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+
+            $this->upload->initialize($config);
+
+            $this->upload->do_upload('foto');
+
+            $arquivo = $this->upload->data('file_name');
+
+            $url_imagem = base_url($config['upload_path'] . $arquivo);
+
+            $nome_material = $this->input->post('nome_material');
+            $valor = $this->input->post('valor');
+            $fornecedor_id = $this->input->post('fornecedor_id');
+            $quantidade = $this->input->post('quantidade');
+            $quantidade_minima = $this->input->post('quantidade_minima');
+            $modelo = $this->input->post('modelo');
+            $material = $this->input->post('material');
+            $observacoes = $this->input->post('observacoes');
+
+            $data =
                 array(
-                    'nome_material',
-                    'valor',
-                    'quantidade',
-                    'quantidade_minima',
-                    'fornecedor_id',
-                    'modelo',
-                    'material',
-                    'foto',
-                    'observacoes'
-                ),
-                $this->input->post()
-            );
+                    'nome_material' => $nome_material,
+                    'valor' => $valor,
+                    'fornecedor_id' => $fornecedor_id,
+                    'quantidade' => $quantidade,
+                    'quantidade_minima' => $quantidade_minima,
+                    'modelo' => $modelo,
+                    'material' => $material,
+                    'observacoes' => $observacoes,
+                    'foto' => $url_imagem
+                );
 
             $data = html_escape($data);
 

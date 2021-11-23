@@ -24,9 +24,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -79,9 +79,9 @@ $this->load->view('layout/sidebar');
                     <div class="grid-container">
                         <?php foreach ($materiais as $material) :
 
-            ?>
+                        ?>
                         <div class="grid-item">
-                            <div class="container-produto">
+                            <div class="container-produto" style="margin: 16px;">
                                 <img src="<?php echo $material->foto ?>" /><br />
                                 <h4><?php echo $material->nome_material ?></h4>
                                 <h5><?php echo $material->modelo ?></h5>

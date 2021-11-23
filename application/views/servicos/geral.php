@@ -12,9 +12,6 @@ $this->load->view('layout/sidebar');
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
-    <script type="text/javascript" charset="utf8"
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-
 </head>
 
 <body>
@@ -24,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -48,8 +45,6 @@ $this->load->view('layout/sidebar');
             </div>
 
             <?php endif; ?>
-
-
             <?php if ($message = $this->session->flashdata('error')) : ?>
 
             <div class="row">
@@ -71,9 +66,19 @@ $this->load->view('layout/sidebar');
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <a title="Cadastrar Novo Usuário" href="<?php echo base_url('clientes/add'); ?>"
+                    <a title="Cadastrar Novo Usuário" href="<?php echo base_url('servicos/add'); ?>"
                         class="btn btn-success btn-sm float-right"><i class="fas fa-user-plus"></i>&nbsp;Novo</a>
-                    <h6 class="m-0 font-weight-bold text-primary">Clientes</h6>
+                    <a style="margin: 0 16px 0 0;" title="Listagem simplificada"
+                        href="<?php echo base_url('servicos'); ?>" class="btn btn-danger btn-sm float-right"><i
+                            class="fas fa-user-plus"></i>&nbsp;Listagem simplificada</a>
+                    <a title="Cadastrar Novo Usuário" style="margin: 0 16px;"
+                        href="<?php echo base_url('relatorios/servicos'); ?>"
+                        class="btn btn-warning btn-sm float-right"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                            height="16" fill="currentColor" class="bi bi-bar-chart" viewBox="0 0 16 16">
+                            <path
+                                d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z" />
+                        </svg>&nbsp;Gerar relatório</a>
+                    <h6 class="m-0 font-weight-bold text-primary">Serviços</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -81,36 +86,40 @@ $this->load->view('layout/sidebar');
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Nome</th>
-                                    <th>CPF</th>
-                                    <th>Celular</th>
-                                    <th>Veiculo</th>
+                                    <th>Serviço</th>
+                                    <th>Nome do responsável</th>
+                                    <th>Nome do cliente</th>
+                                    <th>Telefone</th>
                                     <th>Placa</th>
+                                    <th>Veículo</th>
                                     <th>Opções</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($clientes as $cliente) :  ?>
+                                <?php foreach ($servicos as $servico) :  ?>
                                 <tr>
-                                    <td><?php echo $cliente->id ?></td>
-                                    <td><?php echo $cliente->nome ?></td>
-                                    <td class="cpf"><?php echo $cliente->cpf ?></td>
-                                    <td class="sp_celphones"><?php echo $cliente->telefone_movel ?></td>
-                                    <td><?php echo $cliente->veiculo ?></td>
-                                    <td><?php echo $cliente->placa ?></td>
+                                    <td><?php echo $servico->id ?></td>
+                                    <td><?php echo $servico->nome_servico ?></td>
+                                    <td><?php echo $servico->nome_funcionario ?></td>
+                                    <td><?php echo $servico->nome ?></td>
+                                    <td class="sp_celphones"><?php echo $servico->telefone_movel ?></td>
+                                    <td><?php echo $servico->placa ?></td>
+                                    <td><?php echo $servico->veiculo ?></td>
                                     <td>
                                         <a title="Visualizar " href="javascript(void)" data-toggle="modal"
-                                            data-target="#servico_info-<?php echo $cliente->id; ?>"
+                                            data-target="#info-<?php echo $servico->id; ?>"
                                             class="btn btn-sm btn-success">Visualizar</a>
-                                        <a title="Editar" href="<?php echo ('clientes/edit/' . $cliente->id); ?>"
+                                        <a title="Editar" href="<?php echo ('servicos/edit/' . $servico->id); ?>"
                                             class="btn btn-sm btn-primary">Editar</a>
                                         <a title="Excluir " href="javascript(void)" data-toggle="modal"
-                                            data-target="#cliente_excluir-<?php echo $cliente->id; ?>"
+                                            data-target="#excluir-<?php echo $servico->id; ?>"
                                             class="btn btn-sm btn-danger">Excluir</a>
+                                        <a title="Imprimir"
+                                            href="<?php echo base_url('servicos/imprimir/' . $servico->id); ?>"
+                                            class="btn btn-sm btn-dark"><i class="fas fa-print"></i></a>
                                     </td>
-                                    <div class="modal fade" id="cliente_excluir-<?php echo $cliente->id; ?>"
-                                        tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                                        aria-hidden="true">
+                                    <div class="modal fade" id="excluir-<?php echo $servico->id; ?>" tabindex="-1"
+                                        role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -128,52 +137,49 @@ $this->load->view('layout/sidebar');
                                                     <button class="btn btn-secondary btn-sm" type="button"
                                                         data-dismiss="modal">Não</button>
                                                     <a class="btn btn-danger btn-sm"
-                                                        href="<?php echo base_url('clientes/del/' . $cliente->id); ?>">Sim</a>
+                                                        href="<?php echo base_url('servicos/del/' . $servico->id); ?>">Sim</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="modal fade" id="servico_info-<?php echo $cliente->id; ?>" tabindex="-1"
+                                    <div class="modal fade" id="info-<?php echo $servico->id; ?>" tabindex="-1"
                                         role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Informações do
-                                                        cliente</h5>
+                                                        serviço</h5>
                                                     <button class="close" type="button" data-dismiss="modal"
                                                         aria-label="Close">
                                                         <span aria-hidden="true">×</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <h5>Nome</h5>
-                                                    <p><?php echo $cliente->nome ?> <?php echo $cliente->sobrenome ?>
+                                                    <h5>Ordem de serviço</h5>
+                                                    <p><?php echo $servico->id ?></p>
+                                                    <hr>
+                                                    <h5>Nome do serviço</h5>
+                                                    <p><?php echo $servico->nome_servico ?></p>
+                                                    <hr>
+                                                    <h5>Nome do responsável</h5>
+                                                    <p><?php echo $servico->nome_funcionario ?></p>
+                                                    <hr>
+                                                    <h5>Nome do cliente</h5>
+                                                    <p><?php echo $servico->nome ?></p>
+                                                    <hr>
+                                                    <h5>Telefone do cliente</h5>
+                                                    <p class="sp_celphones"><?php echo $servico->telefone_movel ?></p>
+                                                    <hr>
+                                                    <h5>Placa do veículo</h5>
+                                                    <p><?php echo $servico->placa ?> - <?php echo $servico->veiculo ?>
                                                     </p>
                                                     <hr>
-                                                    <h5>CPF</h5>
-                                                    <p class="cpf"><?php echo $cliente->cpf ?></p>
+                                                    <h5>Valor</h5>
+                                                    <p class="money">R$ <?php echo $servico->preco ?></p>
                                                     <hr>
-                                                    <h5>Email</h5>
-                                                    <p><?php echo $cliente->email ?></p>
-                                                    <hr>
-                                                    <h5>Telefone fixo</h5>
-                                                    <p class="sp_celphones"><?php echo $cliente->telefone_fixo ?></p>
-                                                    <hr>
-                                                    <h5>Celular</h5>
-                                                    <p class="sp_celphones"><?php echo $cliente->telefone_movel ?></p>
-                                                    <hr>
-                                                    <h5>Endereço</h5>
-                                                    <p><?php echo $cliente->endereco ?></p>
-                                                    <hr>
-                                                    <h5>Sexo</h5>
-                                                    <p><?php echo $cliente->sexo ?></p>
-                                                    <hr>
-                                                    <h5>Veiculo</h5>
-                                                    <p><?php echo $cliente->veiculo ?></p>
-                                                    <hr>
-                                                    <h5>Placa</h5>
-                                                    <p><?php echo $cliente->placa ?></p>
+                                                    <h5>Descrição do serviço</h5>
+                                                    <p><?php echo $servico->descricao ?></p>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary" type="button"
@@ -197,14 +203,6 @@ $this->load->view('layout/sidebar');
     </div>
 
     </div>
-
-    <style>
-    .modal-body {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-    }
-    </style>
 
 </body>
 

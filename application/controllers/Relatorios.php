@@ -1,10 +1,12 @@
 <?php
 
-defined('BASEPATH') OR exit('Ação não permitida!');
+defined('BASEPATH') or exit('Ação não permitida!');
 
-class Relatorios extends CI_Controller {
+class Relatorios extends CI_Controller
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         if (!$this->ion_auth->logged_in()) {
@@ -19,7 +21,8 @@ class Relatorios extends CI_Controller {
         }
     }
 
-    public function servicos() {
+    public function servicos()
+    {
 
         $data = array(
             'titulo' => 'Relatório de serviços',
@@ -89,14 +92,14 @@ class Relatorios extends CI_Controller {
                 $preco_total = $this->servicos_model->gerar_valor_total($data_inicial, $data_final);
                 $quantidade_total = $this->servicos_model->contar_quantidade_servicos($data_inicial, $data_final);
 
-                foreach ($servicos as $servico):
+                foreach ($servicos as $servico) :
 
                     $html .= '<tr>';
                     $html .= '<td>' . $servico->id . '</td>';
                     $html .= '<td>' . formata_data_banco_sem_hora($servico->data) . '</td>';
                     $html .= '<td>' . $servico->nome_cliente . '</td>';
                     $html .= '<td>' . $servico->nome . '</td>';
-                    $html .= '<td>' . 'R$&nbsp;' . $servico->preco . '</td>'; 
+                    $html .= '<td>' . 'R$&nbsp;' . number_format($servico->preco, 2, ",", ".") . '</td>';
                     $html .= '</tr>';
 
                 endforeach;
@@ -106,7 +109,7 @@ class Relatorios extends CI_Controller {
                 $html .= '<td style="border-top: solid #ddd 1px"><strong>Quantidade de serviços realizados</strong></td>';
                 $html .= '<td style="border-top: solid #ddd 1px">' . '&nbsp;' . $quantidade_total->id . '</td>';
                 $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $preco_total->preco . '</td>';
+                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . number_format($preco_total->preco, 2, ",", ".") . '</td>';
 
                 $html .= '</th>';
 
@@ -137,7 +140,8 @@ class Relatorios extends CI_Controller {
     }
 
 
-    public function orcamentos() {
+    public function orcamentos()
+    {
 
         $data = array(
             'titulo' => 'Relatório de orçamentos',
@@ -205,14 +209,14 @@ class Relatorios extends CI_Controller {
                 $preco_total = $this->orcamentos_model->gerar_valor_total($data_inicial, $data_final);
                 $quantidade_total = $this->orcamentos_model->contar_quantidade_orcamentos($data_inicial, $data_final);
 
-                foreach ($orcamentos as $orcamento):
+                foreach ($orcamentos as $orcamento) :
 
                     $html .= '<tr>';
                     $html .= '<td>' . $orcamento->nome_funcionario . '</td>';
                     $html .= '<td>' . $orcamento->placa . '</td>';
                     $html .= '<td>' . $orcamento->carro . '</td>';
                     $html .= '<td>' . formata_data_banco_sem_hora($orcamento->data) . '</td>';
-                    $html .= '<td>' . 'R$&nbsp;' . $orcamento->valor_total . '</td>'; 
+                    $html .= '<td>' . 'R$&nbsp;' . number_format($orcamento->valor_total, 2, ",", ".") . '</td>';
                     $html .= '</tr>';
 
                 endforeach;
@@ -222,7 +226,7 @@ class Relatorios extends CI_Controller {
                 $html .= '<td style="border-top: solid #ddd 1px"><strong>Quantidade de orçamentos realizados</strong></td>';
                 $html .= '<td style="border-top: solid #ddd 1px">' . '&nbsp;' . $quantidade_total->id . '</td>';
                 $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $preco_total->valor_total . '</td>';
+                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . number_format($preco_total->valor_total, 2, ",", ".") . '</td>';
 
                 $html .= '</th>';
 
@@ -251,5 +255,4 @@ class Relatorios extends CI_Controller {
         $this->load->view('relatorios/orcamentos');
         $this->load->view('layout/footer');
     }
-
 }

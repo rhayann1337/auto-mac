@@ -107,7 +107,12 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-auto">
                                         <div class="h5 mb-0 mr-3 font-weight-bold text-warning">
-                                            <?php echo '&nbsp;' . ($quantidade_servicos_orcamentos->id == NULL ? '0,00' : $quantidade_servicos_orcamentos->id); ?>
+                                            <?php if ($quantidade_servicos_orcamentos == NULL) : ?>
+                                            <?php echo '&nbsp;' . '0' ?>
+                                            <?php endif; ?>
+                                            <?php if ($quantidade_servicos_orcamentos != NULL) : ?>
+                                            <?php echo '&nbsp;' . $quantidade_servicos_orcamentos->id; ?>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>

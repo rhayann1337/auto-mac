@@ -32,7 +32,7 @@ class Servicos extends CI_Controller
                 'public/vendor/mask/app.js',
                 'public/vendor/datatables/app.js',
             ),
-            'servicos' => $this->servicos_model->get_all('servicos'),
+            'servicos' => $this->servicos_model->get_all_current_time('servicos'),
             'clientes' => $this->core_model->get_all('clientes'),
             'funcionarios' => $this->core_model->get_all('funcionarios'),
 
@@ -44,6 +44,33 @@ class Servicos extends CI_Controller
 
         $this->load->view('layout/header', $data);
         $this->load->view('servicos/index');
+        $this->load->view('layout/footer');
+    }
+
+    public function geral()
+    {
+        $data = array(
+            'titulo' => 'Serviços Realizados',
+            'styles' => array('https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css'),
+            'scripts' => array(
+                base_url('public/vendor/datatables/jquery.dataTables.js'),
+                'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js',
+                'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
+                base_url('public/vendor/mask/app.js'),
+                base_url('public/vendor/datatables/app.js'),
+            ),
+            'servicos' => $this->servicos_model->get_all('servicos'),
+            'clientes' => $this->core_model->get_all('clientes'),
+            'funcionarios' => $this->core_model->get_all('funcionarios'),
+
+        );
+
+        // echo '<pre>';
+        // print_r($data['materiais']);
+        // exit();
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('servicos/geral');
         $this->load->view('layout/footer');
     }
 
@@ -109,6 +136,14 @@ class Servicos extends CI_Controller
                     $data = html_escape($data);
 
                     $this->core_model->insert('servicos_produtos', $data);
+
+                    $quantidade = 0;
+                    $quantidade += intval($material_quantidade[$i]);
+
+                    $materiais = array(
+                        'quantidade' => $quantidade,
+                    );
+                    $this->materiais_model->atualizar_estoque($material_id[$i], $quantidade);
                 }
 
 
@@ -135,6 +170,7 @@ class Servicos extends CI_Controller
                         base_url('public/vendor/select2/app.js'),
                         base_url('public/vendor/sweetalert2/sweetalert2.js'),
                         base_url('public/vendor/autocomplete/jquery-ui.js'),
+                        base_url('public/vendor/mask/app.js'),
                     ),
                     'servico' => $this->servicos_model->get_by_id($id),
                     'materiais' => $this->servicos_model->get_all_materiais_by_servicos($id),
@@ -188,8 +224,6 @@ class Servicos extends CI_Controller
 
             $servico = $this->session->userdata('last_id');
 
-
-
             $id_servico = $servico;
 
             $material_id = $this->input->post('material_id');
@@ -211,7 +245,16 @@ class Servicos extends CI_Controller
 
                 $data = html_escape($data);
 
+
                 $this->core_model->insert('servicos_produtos', $data);
+
+                $quantidade = 0;
+                $quantidade += intval($material_quantidade[$i]);
+
+                $materiais = array(
+                    'quantidade' => $quantidade,
+                );
+                $this->materiais_model->atualizar_estoque($material_id[$i], $quantidade);
             }
 
 
@@ -238,6 +281,7 @@ class Servicos extends CI_Controller
                     base_url('public/vendor/select2/app.js'),
                     base_url('public/vendor/sweetalert2/sweetalert2.js'),
                     base_url('public/vendor/autocomplete/jquery-ui.js'),
+                    base_url('public/vendor/mask/app.js'),
                 ),
                 'materiais' => $this->servicos_model->get_all('materiais'),
                 'clientes' => $this->core_model->get_all('clientes'),
@@ -315,7 +359,7 @@ class Servicos extends CI_Controller
                 . '<strong>Veículo: </strong>' . $servico->veiculo . '<br/>' . '<br/>'
                 . '<strong>Celular: </strong>' . $servico->telefone_movel . '<br/>' . '<br/>'
                 . '<strong>Data: </strong>' . formata_data_banco_sem_hora($servico->data) . '<br/>' . '<br/>'
-                . '<strong>Preço: </strong>R$' . $servico->preco . '<br/>' . '<br/>'
+                . '<strong>Preço: </strong>R$' . number_format($servico->preco, 2, ",", ".") . '<br/>' . '<br/>'
                 . '<strong>Descrição do serviço: </strong>' . $servico->descricao . '<br/>'
                 . '</p>';
 
@@ -326,6 +370,7 @@ class Servicos extends CI_Controller
 
             $html .= '<tr>';
 
+            $html .= '<th>id</th>';
             $html .= '<th>Material</th>';
             $html .= '<th style="text-align: center;">Quantidade</th>';
             $html .= '<th>Valor unitário</th>';
@@ -342,7 +387,7 @@ class Servicos extends CI_Controller
                 $html .= '<td>' . intval($key + 1) . '</td>';
                 $html .= '<td>' . $material->nome_material . '</td>';
                 $html .= '<td style="text-align: center;">' . $material->quantidade_produto . '</td>';
-                $html .= '<td>' . 'R$&nbsp;' . $material->valor . '</td>';
+                $html .= '<td>' . 'R$&nbsp;' . number_format($material->valor, 2, ",", ".") . '</td>';
                 $html .= '</tr>';
 
             endforeach;
@@ -350,7 +395,7 @@ class Servicos extends CI_Controller
             $html .= '<th colspan="4">';
 
             $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-            $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $servico->preco . '</td>';
+            $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . number_format($servico->preco, 2, ",", ".") . '</td>';
 
             $html .= '</th>';
 

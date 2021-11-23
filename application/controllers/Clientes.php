@@ -27,7 +27,7 @@ class Clientes extends CI_Controller
                 'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js',
                 'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js',
                 'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
-                'public/vendor/mask/app.js',
+                base_url('public/vendor/mask/app.js'),
                 'public/vendor/datatables/app.js',
             ),
             'clientes' => $this->core_model->get_all('clientes'),
@@ -100,11 +100,9 @@ class Clientes extends CI_Controller
                         'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js',
                         'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js',
                         'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
-                        'public/vendor/mask/app.js',
+                        base_url('public/vendor/mask/app.js'),
                     ),
-
-                    'usuario' => $this->ion_auth->user($cliente_id)->row(),
-
+                    'cliente' => $this->core_model->get_by_id('clientes', array('id' => $cliente_id)),
                 );
 
                 $this->load->view('layout/header', $data);
@@ -173,7 +171,7 @@ class Clientes extends CI_Controller
                     'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js',
                     'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js',
                     'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
-                    'public/vendor/mask/app.js',
+                    base_url('public/vendor/mask/app.js'),
 
                 ),
             );

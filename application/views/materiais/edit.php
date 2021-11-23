@@ -21,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -33,7 +33,7 @@ $this->load->view('layout/sidebar');
                         class="btn btn-success btn-sm float-right">Voltar</i></a>
                 </div>
                 <div class="card-body">
-                    <form method="POST" name="form_materiais">
+                    <form method="POST" name="form_materiais" enctype="multipart/form-data">
 
                         <div class="form-group row">
 
@@ -113,10 +113,9 @@ $this->load->view('layout/sidebar');
 
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="margin-top: 48px;">
                             <label>Imagem</label>
-                            <input type="text" class="form-control" name="foto" placeholder="URL da foto"
-                                value="<?php echo $material->foto ?>">
+                            <input type="file" name="foto" />
                             <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
 
                         </div>

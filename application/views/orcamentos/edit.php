@@ -21,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -71,8 +71,8 @@ $this->load->view('layout/sidebar');
                                     </div>
 
                                     <div class="containerInput">
-                                        <a>Valor total</a><input type="number" class="form-control" name="valor_total"
-                                            value="<?php echo $orcamento->valor_total; ?>">
+                                        <a>Valor total</a><input type="text" class="form-control" name="valor_total"
+                                            value="<?php echo number_format($orcamento->valor_total, 2, ",", "."); ?>">
                                         <?php echo form_error('valor_total', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
 

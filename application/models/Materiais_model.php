@@ -28,6 +28,13 @@ class Materiais_model extends CI_Model
         return $this->db->get('materiais')->row();
     }
 
+    public function atualizar_estoque($id, $material_utilizado)
+    {
+        $this->db->set('quantidade', 'quantidade - ' . $material_utilizado, FALSE);
+        $this->db->where('id', $id);
+        $this->db->update('materiais');
+    }
+
 
     public function gerar_relatorio_materiais($data_inicial = NULL, $data_final = NULL)
     {

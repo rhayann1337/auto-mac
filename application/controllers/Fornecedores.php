@@ -40,6 +40,8 @@ class Fornecedores extends CI_Controller
 
     public function edit($id = NULL)
     {
+        $this->load->library('upload');
+
         if (!$id || !$this->core_model->get_by_id('fornecedores', array('id' => $id))) {
             $this->session->set_flashdata('error', 'Fornecedor não encontrado');
             redirect('fornecedores');
@@ -56,26 +58,56 @@ class Fornecedores extends CI_Controller
             $this->form_validation->set_rules('estado', 'PR', 'required');
             $this->form_validation->set_rules('descricao', 'Observações', 'max_length[1000]');
 
+
+
             if ($this->form_validation->run()) {
 
-                $data = elements(
+                $config['upload_path'] = "assets/imagens/fornecedores/";
+                $config['max_size'] = 2048;
+                $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+
+                $this->upload->initialize($config);
+
+                $contem_foto = $this->upload->do_upload('foto');
+
+                $this->upload->do_upload('foto');
+
+                $arquivo = $this->upload->data('file_name');
+
+                $url_imagem = base_url($config['upload_path'] . $arquivo);
+
+                $marca = $this->input->post('marca');
+                $ctt = $this->input->post('contato');
+                $endereco = $this->input->post('endereco');
+                $telefone = $this->input->post('telefone');
+                $email = $this->input->post('email');
+                $cep = $this->input->post('cep');
+                $estado = $this->input->post('estado');
+                $descricao = $this->input->post('descricao');
+                $bairro = $this->input->post('bairro');
+                $cidade = $this->input->post('cidade');
+
+                $data =
                     array(
-                        'marca',
-                        'contato',
-                        'endereco',
-                        'telefone',
-                        'email',
-                        'cep',
-                        'estado',
-                        'descricao',
-                        'bairro',
-                        'cidade',
-                        'foto',
-                    ),
-                    $this->input->post()
-                );
+                        'marca' => $marca,
+                        'contato' => $ctt,
+                        'endereco' => $endereco,
+                        'telefone' => $telefone,
+                        'email' => $email,
+                        'cep' => $cep,
+                        'estado' => $estado,
+                        'descricao' => $descricao,
+                        'bairro' => $bairro,
+                        'cidade' => $cidade,
+                        'foto' => $url_imagem
+                    );
 
                 $data = html_escape($data);
+
+                if (!$contem_foto) {
+
+                    unset($data['foto']);
+                }
 
                 $this->core_model->update('fornecedores', $data, array('id' => $id));
 
@@ -93,7 +125,7 @@ class Fornecedores extends CI_Controller
                         'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js',
                         'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js',
                         'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
-                        'public/vendor/mask/app.js',
+                        base_url('public/vendor/mask/app.js'),
                     ),
                     'fornecedor' => $this->core_model->get_by_id('fornecedores', array('id' => $id)),
                 );
@@ -119,30 +151,32 @@ class Fornecedores extends CI_Controller
         $this->form_validation->set_rules('estado', 'PR', 'required');
         $this->form_validation->set_rules('descricao', 'Observações', 'max_length[1000]');
 
-        $config['upload_path'] = "assets/imagens/";
-        $config['max_size'] = 2048;
-        $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
 
-        $this->upload->initialize($config);
-
-        $this->upload->do_upload('foto');
-
-        $arquivo = $this->upload->data('file_name');
-
-        $url_imagem = base_url($config['upload_path'] . $arquivo);
-
-        $marca = $this->input->post('marca');
-        $ctt = $this->input->post('contato');
-        $endereco = $this->input->post('endereco');
-        $telefone = $this->input->post('telefone');
-        $email = $this->input->post('email');
-        $cep = $this->input->post('cep');
-        $estado = $this->input->post('estado');
-        $descricao = $this->input->post('descricao');
-        $bairro = $this->input->post('bairro');
-        $cidade = $this->input->post('cidade');
 
         if ($this->form_validation->run()) {
+
+            $config['upload_path'] = "assets/imagens/fornecedores/";
+            $config['max_size'] = 2048;
+            $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+
+            $this->upload->initialize($config);
+
+            $this->upload->do_upload('foto');
+
+            $arquivo = $this->upload->data('file_name');
+
+            $url_imagem = base_url($config['upload_path'] . $arquivo);
+
+            $marca = $this->input->post('marca');
+            $ctt = $this->input->post('contato');
+            $endereco = $this->input->post('endereco');
+            $telefone = $this->input->post('telefone');
+            $email = $this->input->post('email');
+            $cep = $this->input->post('cep');
+            $estado = $this->input->post('estado');
+            $descricao = $this->input->post('descricao');
+            $bairro = $this->input->post('bairro');
+            $cidade = $this->input->post('cidade');
 
             $data =
                 array(
@@ -175,7 +209,7 @@ class Fornecedores extends CI_Controller
                     'https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js',
                     'https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js',
                     'https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js',
-                    'public/vendor/mask/app.js',
+                    base_url('public/vendor/mask/app.js'),
                     'public/vendor/datatables/app.js',
                 ),
             );

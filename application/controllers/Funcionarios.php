@@ -45,45 +45,79 @@ class Funcionarios extends CI_Controller
 
     public function edit($id = NULL)
     {
+        $this->load->library('upload');
+
         if (!$id || !$this->core_model->get_by_id('funcionarios', array('id' => $id))) {
             $this->session->set_flashdata('error', 'Fornecedor não encontrado');
             redirect('funcionarios');
         } else {
 
-            $this->form_validation->set_rules('nome_funcionario', '', 'trim|required');
-        $this->form_validation->set_rules('sobrenome', '', 'trim|required');
-        $this->form_validation->set_rules('cpf', 'CPF', 'min_length[11]|max_length[11]|cpf_check');
-        $this->form_validation->set_rules('email', '', 'trim|required');
-        $this->form_validation->set_rules('telefone_fixo', '', 'trim|required');
-        $this->form_validation->set_rules('telefone_movel', '', 'trim|required');
-        $this->form_validation->set_rules('endereco', '', 'trim|required');
-        $this->form_validation->set_rules('sexo', '', 'trim|required');
-        $this->form_validation->set_rules('rg', '', 'trim|required');
-        $this->form_validation->set_rules('foto', '', 'trim|required');
-        $this->form_validation->set_rules('cargo', '', 'trim|required');
-        $this->form_validation->set_rules('data_nascimento', '', 'trim|required');
+            $this->load->library('upload');
 
-        if ($this->form_validation->run()) {
+            $this->form_validation->set_rules('nome_funcionario', 'Nome', 'trim|required');
+            $this->form_validation->set_rules('sobrenome', 'SobrenomeS', 'trim|required');
+            $this->form_validation->set_rules('cpf', 'CPF', 'min_length[11]|max_length[14]');
+            $this->form_validation->set_rules('email', 'Email', 'trim|required');
+            $this->form_validation->set_rules('telefone_fixo', 'Telefone fixo', 'trim|required');
+            $this->form_validation->set_rules('telefone_movel', 'Telefone Celular', 'trim|required');
+            $this->form_validation->set_rules('endereco', 'Endereço', 'trim|required');
+            $this->form_validation->set_rules('sexo', 'Sexo', 'trim|required');
+            $this->form_validation->set_rules('rg', 'RG', 'trim|required');
+            $this->form_validation->set_rules('cargo', 'Cargo', 'trim|required');
+            $this->form_validation->set_rules('data_nascimento', 'Data de nascimento', 'trim|required');
 
-            $data = elements(
-                array(
-                    'nome_funcionario',
-                    'sobrenome',
-                    'cpf',
-                    'email',
-                    'telefone_fixo',
-                    'telefone_movel',
-                    'endereco',
-                    'sexo',
-                    'rg',
-                    'foto',
-                    'cargo',
-                    'data_nascimento'
-                ),
-                $this->input->post()
-                );
+
+
+            if ($this->form_validation->run()) {
+
+                $config['upload_path'] = "assets/imagens/funcionarios/";
+                $config['max_size'] = 2048;
+                $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+
+                $this->upload->initialize($config);
+
+                $contem_foto = $this->upload->do_upload('foto');
+
+                $this->upload->do_upload('foto');
+
+                $arquivo = $this->upload->data('file_name');
+
+                $url_imagem = base_url($config['upload_path'] . $arquivo);
+
+                $nome = $this->input->post('nome_funcionario');
+                $sobrenome = $this->input->post('sobrenome');
+                $cpf = $this->input->post('cpf');
+                $email = $this->input->post('email');
+                $telefone_fixo = $this->input->post('telefone_fixo');
+                $telefone_movel = $this->input->post('telefone_movel');
+                $endereco = $this->input->post('endereco');
+                $sexo = $this->input->post('sexo');
+                $rg = $this->input->post('rg');
+                $cargo = $this->input->post('cargo');
+                $data_nascimento = $this->input->post('data_nascimento');
+
+                $data =
+                    array(
+                        'nome_funcionario' => $nome,
+                        'sobrenome' => $sobrenome,
+                        'cpf' => $cpf,
+                        'email' => $email,
+                        'telefone_fixo' => $telefone_fixo,
+                        'telefone_movel' => $telefone_movel,
+                        'endereco' => $endereco,
+                        'sexo' => $sexo,
+                        'rg' => $rg,
+                        'cargo' => $cargo,
+                        'data_nascimento' => $data_nascimento,
+                        'foto' => $url_imagem
+                    );
 
                 $data = html_escape($data);
+
+                if (!$contem_foto) {
+
+                    unset($data['foto']);
+                }
 
                 $this->core_model->update('funcionarios', $data, array('id' => $id));
 
@@ -113,56 +147,65 @@ class Funcionarios extends CI_Controller
         }
     }
 
-    public function cpf_check($cpf)
-    {
-        $funcionario_id = $this->input->post('id');
-
-        if ($this->core_model->get_by_id('funcionarios', array('cpf' => $cpf, 'id !=' => $funcionario_id))) {
-
-            $this->form_validation->set_message('cpf_check', 'Esse cpf já está cadastrado');
-
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-
     public function add()
     {
+        $this->load->library('upload');
 
-        $this->form_validation->set_rules('nome_funcionario', '', 'trim|required');
-        $this->form_validation->set_rules('sobrenome', '', 'trim|required');
-        $this->form_validation->set_rules('cpf', 'CPF', 'min_length[11]|max_length[11]|cpf_check');
-        $this->form_validation->set_rules('email', '', 'trim|required');
-        $this->form_validation->set_rules('telefone_fixo', '', 'trim|required');
-        $this->form_validation->set_rules('telefone_movel', '', 'trim|required');
-        $this->form_validation->set_rules('endereco', '', 'trim|required');
-        $this->form_validation->set_rules('sexo', '', 'trim|required');
-        $this->form_validation->set_rules('rg', '', 'trim|required');
-        $this->form_validation->set_rules('foto', '', 'trim|required');
-        $this->form_validation->set_rules('cargo', '', 'trim|required');
-        $this->form_validation->set_rules('data_nascimento', '', 'trim|required');
+        $this->form_validation->set_rules('nome_funcionario', 'Nome', 'trim|required');
+        $this->form_validation->set_rules('sobrenome', 'SobrenomeS', 'trim|required');
+        $this->form_validation->set_rules('cpf', 'CPF', 'min_length[11]|max_length[14]|is_unique[funcionarios.cpf]');
+        $this->form_validation->set_rules('email', 'Email', 'trim|required');
+        $this->form_validation->set_rules('telefone_fixo', 'Telefone fixo', 'trim|required');
+        $this->form_validation->set_rules('telefone_movel', 'Telefone Celular', 'trim|required');
+        $this->form_validation->set_rules('endereco', 'Endereço', 'trim|required');
+        $this->form_validation->set_rules('sexo', 'Sexo', 'trim|required');
+        $this->form_validation->set_rules('rg', 'RG', 'trim|required');
+        $this->form_validation->set_rules('cargo', 'Cargo', 'trim|required');
+        $this->form_validation->set_rules('data_nascimento', 'Data de nascimento', 'trim|required');
+
+
 
         if ($this->form_validation->run()) {
 
-            $data = elements(
+            $config['upload_path'] = "assets/imagens/funcionarios/";
+            $config['max_size'] = 2048;
+            $config["allowed_types"] = "gif|jpg|jpeg|png|svg";
+
+            $this->upload->initialize($config);
+
+            $this->upload->do_upload('foto');
+
+            $arquivo = $this->upload->data('file_name');
+
+            $url_imagem = base_url($config['upload_path'] . $arquivo);
+
+            $nome = $this->input->post('nome_funcionario');
+            $sobrenome = $this->input->post('sobrenome');
+            $cpf = $this->input->post('cpf');
+            $email = $this->input->post('email');
+            $telefone_fixo = $this->input->post('telefone_fixo');
+            $telefone_movel = $this->input->post('telefone_movel');
+            $endereco = $this->input->post('endereco');
+            $sexo = $this->input->post('sexo');
+            $rg = $this->input->post('rg');
+            $cargo = $this->input->post('cargo');
+            $data_nascimento = $this->input->post('data_nascimento');
+
+            $data =
                 array(
-                    'nome_funcionario',
-                    'sobrenome',
-                    'cpf',
-                    'email',
-                    'telefone_fixo',
-                    'telefone_movel',
-                    'endereco',
-                    'sexo',
-                    'rg',
-                    'foto',
-                    'cargo',
-                    'data_nascimento'
-                ),
-                $this->input->post()
-            );
+                    'nome_funcionario' => $nome,
+                    'sobrenome' => $sobrenome,
+                    'cpf' => $cpf,
+                    'email' => $email,
+                    'telefone_fixo' => $telefone_fixo,
+                    'telefone_movel' => $telefone_movel,
+                    'endereco' => $endereco,
+                    'sexo' => $sexo,
+                    'rg' => $rg,
+                    'cargo' => $cargo,
+                    'data_nascimento' => $data_nascimento,
+                    'foto' => $url_imagem
+                );
 
             $data = html_escape($data);
 

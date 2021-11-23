@@ -21,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -94,7 +94,7 @@ $this->load->view('layout/sidebar');
                                     <td><?php echo $orcamento->nome ?></td>
                                     <td><?php echo $orcamento->nome_funcionario ?></td>
                                     <td><?php echo formata_data_banco_com_hora($orcamento->data); ?></td>
-                                    <td>R$ <?php echo $orcamento->valor_total ?></td>
+                                    <td>R$ <?php echo number_format($orcamento->valor_total, 2, ",", "."); ?></td>
                                     <td><?php echo $orcamento->veiculo ?></td>
                                     <td><?php echo $orcamento->placa ?></td>
                                     <td>
@@ -123,7 +123,8 @@ $this->load->view('layout/sidebar');
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">Para excluir o registro clique em
-                                                    <strong>Sim</strong></div>
+                                                    <strong>Sim</strong>
+                                                </div>
                                                 <div class="modal-footer">
                                                     <button class="btn btn-secondary btn-sm" type="button"
                                                         data-dismiss="modal">Não</button>

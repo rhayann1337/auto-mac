@@ -21,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -54,7 +54,7 @@ $this->load->view('layout/sidebar');
 
                             <div class="col-md-4">
                                 <label>Telefone</label>
-                                <input type="number" class="form-control sp_celphones" name="telefone"
+                                <input type="text" class="form-control sp_celphones" name="telefone"
                                     value="<?php echo set_value('telefone'); ?>">
                                 <?php echo form_error('telefone', '<small class="form-text text-danger">', '</small>'); ?>
 
@@ -67,7 +67,7 @@ $this->load->view('layout/sidebar');
                                 <?php echo form_error('endereco', '<small class="form-text text-danger">', '</small>'); ?>
 
                                 <label>CEP</label>
-                                <input type="text" class="form-control" name="cep"
+                                <input type="text" class="form-control cep" name="cep"
                                     value="<?php echo set_value('cep'); ?>">
                                 <?php echo form_error('cep', '<small class="form-text text-danger">', '</small>'); ?>
 
@@ -98,7 +98,7 @@ $this->load->view('layout/sidebar');
                             </div>
 
                             <div class="col-md-4" style="margin-top: 48px;">
-                                <label>Imagem (URL)</label>
+                                <label>Imagem</label>
                                 <input type="file" name="foto" />
                                 <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
 
