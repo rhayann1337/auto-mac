@@ -40,7 +40,6 @@ class Relatorios extends CI_Controller
                 $empresa = $this->core_model->get_by_id('oficina', array('id' => 1));
 
                 $servicos = $this->servicos_model->gerar_relatorio_servicos($data_inicial, $data_final);
-                // $materiais = $this->servicos_model->get_all_materiais_by_servicos($dados);
 
                 $file_name = 'Relatório de serviços';
 
@@ -99,7 +98,7 @@ class Relatorios extends CI_Controller
                     $html .= '<td>' . $servico->id . '</td>';
                     $html .= '<td>' . formata_data_banco_sem_hora($servico->data) . '</td>';
                     $html .= '<td>' . $servico->nome . '</td>';
-                    $html .= '<td>' . $servico->nome_funcionario . '</td>';
+                    $html .= '<td>' . base64_decode($servico->nome_funcionario) . '</td>';
                     $html .= '<td>' . $servico->nome_servico . '</td>';
                     $html .= '<td>' . 'R$&nbsp;' . number_format($servico->preco, 2, ",", ".") . '</td>';
                     $html .= '</tr>';
@@ -138,6 +137,84 @@ class Relatorios extends CI_Controller
 
         $this->load->view('layout/header', $data);
         $this->load->view('relatorios/servicos');
+        $this->load->view('layout/footer');
+    }
+
+    public function materiais()
+    {
+        $this->load->model('materiais_model');
+
+        $data = array(
+            'titulo' => 'Relatório de materiais utilizados',
+        );
+
+        $empresa = $this->core_model->get_by_id('oficina', array('id' => 1));
+
+        $materiais = $this->materiais_model->get_all();
+
+        $file_name = 'Relatório de materiais';
+
+        $html = '<html>';
+
+        $html .= '<head>';
+        $html .= '<title>' . $empresa->nome_fantasia . ' | Relatório de materiais</title>';
+
+        $html .= '</head>';
+
+        $html .= '<body style="font-size:12px">';
+
+        $html .= '<h4 align="center">
+                ' . $empresa->nome_fantasia . '<br/>
+                ' . $empresa->razao_social . '<br/>
+                ' . 'CNPJ: ' . $empresa->cnpj . '<br/>
+                ' . $empresa->endereco . ',&nbsp;' . $empresa->numero . '<br/>
+                ' . 'CEP: ' . $empresa->cep . ',&nbsp;' . $empresa->cidade . ',&nbsp;' . $empresa->estado . '<br/>
+                ' . 'Telefone: ' . $empresa->telefone_fixo . '<br/>
+                ' . 'E-mail: ' . $empresa->email . '<br/>
+                </h4>';
+
+        $html .= '<hr>';
+
+        $data_atual = (new \DateTime())->format('d-m-Y');
+
+        $html .= '<p align="center" style="font-size: 12px">Relatório gerado em ' . $data_atual . '</p>';
+
+        $html .= '<hr>';
+
+        $html .= '<table width="100%" border: solid #ddd 1px>';
+
+        $html .= '<tr>';
+
+        $html .= '<th style="font-size: 16px">Nome</th>';
+        $html .= '<th style="font-size: 16px">Fornecedor</th>';
+        $html .= '<th style="font-size: 16px">Qtd</th>';
+        $html .= '<th style="font-size: 16px">Qtd mínima</th>';
+
+        $html .= '</tr>';
+
+        foreach ($materiais as $material) :
+
+            $html .= '<tr>';
+            $html .= '<td>' . $material->nome_material . '</td>';
+            $html .= '<td>' . $material->marca . '</td>';
+            $html .= '<td>' . $material->quantidade . '</td>';
+            $html .= '<td>' . $material->quantidade_minima . '</td>';
+            $html .= '</tr>';
+
+        endforeach;
+
+        $html .= '</table>';
+
+        $html .= '</body>';
+
+        $html .= '<html>';
+
+
+        $this->pdf->createPDF($html, $file_name, FALSE);
+
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('relatorios/materiais');
         $this->load->view('layout/footer');
     }
 
@@ -214,7 +291,7 @@ class Relatorios extends CI_Controller
                 foreach ($orcamentos as $orcamento) :
 
                     $html .= '<tr>';
-                    $html .= '<td>' . $orcamento->nome_funcionario . '</td>';
+                    $html .= '<td>' . base64_decode($orcamento->nome_funcionario) . '</td>';
                     $html .= '<td>' . $orcamento->placa . '</td>';
                     $html .= '<td>' . $orcamento->veiculo . '</td>';
                     $html .= '<td>' . formata_data_banco_sem_hora($orcamento->data) . '</td>';

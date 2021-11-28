@@ -92,7 +92,7 @@ $this->load->view('layout/sidebar');
                                 <tr>
                                     <td><?php echo $orcamento->id ?></td>
                                     <td><?php echo $orcamento->nome ?></td>
-                                    <td><?php echo $orcamento->nome_funcionario ?></td>
+                                    <td><?php echo base64_decode($orcamento->nome_funcionario); ?></td>
                                     <td><?php echo formata_data_banco_com_hora($orcamento->data); ?></td>
                                     <td>R$ <?php echo number_format($orcamento->valor_total, 2, ",", "."); ?></td>
                                     <td><?php echo $orcamento->veiculo ?></td>
@@ -149,7 +149,7 @@ $this->load->view('layout/sidebar');
                                                 </div>
                                                 <div class="modal-body">
                                                     <h5>Nome do funcionário responsável</h5>
-                                                    <p><?php echo $orcamento->nome_funcionario ?></p>
+                                                    <p><?php echo base64_decode($orcamento->nome_funcionario); ?></p>
                                                     <hr>
                                                     <h5>Nome do cliente</h5>
                                                     <p><?php echo $orcamento->nome ?></p>

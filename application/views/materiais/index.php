@@ -71,112 +71,219 @@ $this->load->view('layout/sidebar');
 
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <a title="Cadastrar Novo Usuário" href="<?php echo base_url('materiais/add'); ?>"
+                    <a title="Cadastrar novo produto" href="<?php echo base_url('materiais/add'); ?>"
                         class="btn btn-success btn-sm float-right"><i class="fas fa-user-plus"></i>&nbsp;Novo</a>
-                    <h6 class="m-0 font-weight-bold text-primary">Materiais em estoque</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Materiais</h6>
                 </div>
-                <div class="card-body">
-                    <div class="grid-container">
-                        <?php foreach ($materiais as $material) :
-
-                        ?>
-                        <div class="grid-item">
-                            <div class="container-produto" style="margin: 16px;">
-                                <img src="<?php echo $material->foto ?>" /><br />
-                                <h4><?php echo $material->nome_material ?></h4>
-                                <h5><?php echo $material->modelo ?></h5>
-                                <h5><?php echo $material->marca ?></h5>
-                                <h5>Qtd: <?php echo $material->quantidade ?></h5>
-                                <a title="Visualizar " href="javascript(void)" data-toggle="modal"
-                                    data-target="#info-<?php echo $material->id; ?>" class="btn btn-sm btn-success"><svg
-                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-search" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                    </svg> Visualizar</a>
+                <div class="containerGeral">
+                    <?php foreach ($materiais as $material) : ?>
+                    <div class="container">
+                        <div class="card">
+                            <div class="imgBx">
+                                <img src="<?php echo $material->foto ?>">
+                            </div>
+                            <div class="contentBx">
+                                <h2><?php echo $material->nome_material ?></h2>
+                                <a title="Visualizar "
+                                    href="<?php echo ('materiais/edit/' . $material->id); ?>">Visualizar</a>
                             </div>
                         </div>
-
-
-
-                        <div class="modal fade" id="info-<?php echo $material->id; ?>" tabindex="-1" role="dialog"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Informações do material</h5>
-                                        <br />
-                                        <a title="Editar" style="margin: 0 16px;"
-                                            href="<?php echo ('materiais/edit/' . $material->id); ?>"
-                                            class="btn btn-sm btn-danger">Editar</a>
-                                        <a title="Excluir " href="javascript(void)" data-toggle="modal"
-                                            data-target="#produto_excluir-<?php echo $material->id; ?>"
-                                            class="btn btn-sm btn-danger">Excluir</a>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body"
-                                        style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
-                                        <h5>Nome</h5>
-                                        <p><?php echo $material->nome_material ?> <img
-                                                src="<?php echo $material->foto ?>" style="width: 48px; height: 48px" />
-                                        </p>
-                                        <h5>Modelo</h5>
-                                        <p><?php echo $material->modelo ?></p>
-                                        <h5>Marca</h5>
-                                        <p><?php echo $material->marca ?></p>
-                                        <hr>
-                                        <h5>Quantidade</h5>
-                                        <p><?php echo $material->quantidade ?></p>
-                                        <hr>
-                                        <h5>Material</h5>
-                                        <p style="text-align: center;"><?php echo $material->material ?></p>
-                                        <hr>
-                                        <h5>Observações</h5>
-                                        <p><?php echo $material->observacoes ?></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button style="width: 100%;" class="btn btn-primary" type="button"
-                                            data-dismiss="modal">Entendi</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="produto_excluir-<?php echo $material->id; ?>" tabindex="-1"
-                            role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Tem certeza da deleção</h5>
-                                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">Para excluir o registro clique em <strong>Sim</strong></div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary btn-sm" type="button"
-                                            data-dismiss="modal">Não</button>
-                                        <a class="btn btn-danger btn-sm"
-                                            href="<?php echo base_url('materiais/del/' . $material->id); ?>">Sim</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
                     </div>
-                    </table>
+
+                    <?php endforeach; ?>
                 </div>
             </div>
-
         </div>
+    </div>
+
+    </div>
 
     </div>
 
     </div>
 
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .containerGeral {
+        display: grid;
+        flex-direction: row;
+        grid-template-columns: repeat(4, 350px);
+    }
+
+    .container {
+        position: relative;
+        padding: 16px;
+    }
+
+    .container .card {
+        border: solid 2px;
+        box-shadow: 0 0 8px black;
+        position: relative;
+        width: 320px;
+        height: 450px;
+        border-radius: 20px;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .container .card:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        clip-path: circle(150px at 80% 20%);
+        transition: 0.5s ease-in-out;
+    }
+
+    .container .card:hover:before {
+        clip-path: circle(300px at 80% -20%);
+    }
+
+    .container .card:after {
+        position: absolute;
+        top: 30%;
+        left: -20%;
+        font-size: 12em;
+        font-weight: 800;
+        font-style: italic;
+        color: rgba(255, 255, 25, 0.05)
+    }
+
+    .container .card .imgBx {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10000;
+        width: 100%;
+        height: 220px;
+        transition: 0.5s;
+    }
+
+    .container .card:hover .imgBx {
+        top: 0%;
+        transform: translateY(0%);
+
+    }
+
+    .container .card .imgBx img {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(0deg);
+        width: 230px;
+        height: 230px;
+    }
+
+    .container .card .contentBx {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 100px;
+        text-align: center;
+        transition: 1s;
+        z-index: 10;
+    }
+
+    .container .card:hover .contentBx {
+        height: 210px;
+    }
+
+    .container .card .contentBx h2 {
+        position: relative;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: #232323;
+        margin: 0;
+    }
+
+    .container .card .contentBx .size,
+    .container .card .contentBx .color {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 20px;
+        transition: 0.5s;
+        opacity: 0;
+        visibility: hidden;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+    .container .card:hover .contentBx .size {
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0.5s;
+    }
+
+    .container .card:hover .contentBx .color {
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0.6s;
+    }
+
+    .container .card .contentBx .size h3,
+    .container .card .contentBx .color h3 {
+        color: #fff;
+        font-weight: 300;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-right: 10px;
+    }
+
+
+    .container .card .contentBx .color span {
+        width: 20px;
+        height: 20px;
+        background: #ff0;
+        border-radius: 50%;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+
+    .container .card .contentBx .color span:nth-child(2) {
+        background: #9bdc28;
+    }
+
+    .container .card .contentBx .color span:nth-child(3) {
+        background: #03a9f4;
+    }
+
+    .container .card .contentBx .color span:nth-child(4) {
+        background: #e91e63;
+    }
+
+    .container .card .contentBx a {
+        display: inline-block;
+        padding: 10px 20px;
+        background: black;
+        border-radius: 4px;
+        margin-top: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        color: #fff;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: 0.5s;
+        margin-top: 0;
+    }
+
+    .container .card:hover .contentBx a {
+        opacity: 1;
+        transform: translateY(0px);
+        transition-delay: 0.75s;
+
+    }
+
+
     .modal-body {
         display: flex;
         align-items: center;
@@ -187,21 +294,21 @@ $this->load->view('layout/sidebar');
 
 
     <style>
-    .container-produto {
+    .container-funcionario {
         background-color: rgba(0, 0, 0, 0.05);
         border-radius: 16px;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-        height: 400px;
+        height: 300px;
         width: 215px;
         margin: 0;
     }
 
     .grid-container {
         display: grid;
-        grid-template-columns: repeat(5, 300px);
+        grid-template-columns: repeat(4, 300px);
         padding: 10px;
         flex-direction: column;
     }

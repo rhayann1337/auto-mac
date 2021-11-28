@@ -31,7 +31,7 @@ $this->load->view('layout/sidebar');
                 <div class="card-header py-3">
                     <a title="Voltar" href="<?php echo base_url() . 'servicos'; ?>"
                         class="btn btn-success btn-sm float-right">Voltar</i></a>
-                    <h6 class="m-0 font-weight-bold text-primary">Editar serviço</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Editar dados de serviço</h6>
                 </div>
                 <div class="card-body">
                     <form class="user" action="" id="form" name="form_edit" enctype="multipart/form-data" method="post"
@@ -155,7 +155,7 @@ $this->load->view('layout/sidebar');
                                             <?php foreach ($funcionarios as $funcionario) : ?>
                                             <option value="<?php echo $funcionario->id; ?>"
                                                 <?php echo ($funcionario->id != NULL) ? 'selected' : ''; ?>>
-                                                <?php echo $funcionario->nome_funcionario; ?></option>
+                                                <?php echo base64_decode($funcionario->nome_funcionario); ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>

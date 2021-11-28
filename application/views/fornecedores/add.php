@@ -98,9 +98,11 @@ $this->load->view('layout/sidebar');
                             </div>
 
                             <div class="col-md-4" style="margin-top: 48px;">
-                                <label>Imagem</label>
-                                <input type="file" name="foto" />
-                                <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
+                                <div class="containerImagem">
+                                    <label for='foto'>Selecionar uma foto &#187;</label>
+                                    <input type="file" name="foto" id="foto" />
+                                    <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
+                                </div>
 
                             </div>
 
@@ -114,7 +116,9 @@ $this->load->view('layout/sidebar');
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        <div class="containerButton">
+                            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -122,7 +126,30 @@ $this->load->view('layout/sidebar');
         </div>
 
     </div>
+    <style>
+    .col-md-4 {
+        padding: 16px;
+    }
 
+    .col-md-4 input[type='file'] {
+        display: none
+    }
+
+    .containerButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .containerImagem label {
+        background-color: #3498db;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        margin: 10px;
+        padding: 6px 20px
+    }
+    </style>
 
 
 </body>

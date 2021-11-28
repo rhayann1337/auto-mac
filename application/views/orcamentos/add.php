@@ -21,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -31,7 +31,7 @@ $this->load->view('layout/sidebar');
                 <div class="card-header py-3">
                     <a title="Voltar" href="<?php echo base_url() . 'orcamentos'; ?>"
                         class="btn btn-success btn-sm float-right">Voltar</i></a>
-                    <h6 class="m-0 font-weight-bold text-primary">Registrar serviço realizado</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Registrar orçamento</h6>
                 </div>
                 <div class="card-body">
                     <form method="POST" name="form_add_orcamento">
@@ -59,8 +59,8 @@ $this->load->view('layout/sidebar');
                                     <?php foreach ($funcionarios as $funcionario) : ?>
                                     <option value="<?php echo $funcionario->id; ?>"
                                         <?php echo ($funcionario->id != NULL) ? 'selected' : ''; ?>>
-                                        <?php echo $funcionario->nome_funcionario; ?>
-                                        <?php echo $funcionario->sobrenome; ?></option>
+                                        <?php echo base64_decode($funcionario->nome_funcionario); ?>
+                                        <?php echo base64_decode($funcionario->sobrenome); ?></option>
                                     <?php endforeach; ?>
                                 </select>
 

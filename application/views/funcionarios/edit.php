@@ -32,7 +32,8 @@ $this->load->view('layout/sidebar');
                     <a title="Voltar" href="<?php echo base_url() . 'funcionarios'; ?>"
                         class="btn btn-success btn-sm float-right">Voltar</i></a>
                     <h6 class="m-0 font-weight-bold text-primary">Editar dados do funcionário
-                        <?php echo $funcionario->nome_funcionario ?> <?php echo $funcionario->sobrenome ?></h6>
+                        <?php echo base64_decode($funcionario->nome_funcionario); ?>
+                        <?php echo base64_decode($funcionario->sobrenome); ?></h6>
                 </div>
                 <div class="card-body">
                     <style>
@@ -44,6 +45,19 @@ $this->load->view('layout/sidebar');
                     .containerImg {
                         max-width: 300px;
                         max-height: 300px;
+                    }
+
+                    .containerImg input[type='file'] {
+                        display: none
+                    }
+
+                    .containerImg label {
+                        background-color: #3498db;
+                        border-radius: 5px;
+                        color: #fff;
+                        cursor: pointer;
+                        margin: 10px;
+                        padding: 6px 20px
                     }
 
                     .containerDados {
@@ -94,8 +108,8 @@ $this->load->view('layout/sidebar');
                                     <img src="<?php echo $funcionario->foto ?>" style="width: 300px; height: 300px;" />
 
                                     <div class="col-md-4" style="margin-top: 48px;">
-                                        <label>Foto</label>
-                                        <input type="file" name="foto" />
+                                        <label for='foto'>Selecionar uma foto &#187;</label>
+                                        <input type="file" name="foto" id="foto" />
                                         <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
 
                                     </div>
@@ -105,33 +119,37 @@ $this->load->view('layout/sidebar');
 
                                     <div class="containerInput">
                                         <a>Nome</a><input type="text" class="form-control" name="nome_funcionario"
-                                            placeholder="Nome" value="<?php echo $funcionario->nome_funcionario ?>">
+                                            placeholder="Nome"
+                                            value="<?php echo base64_decode($funcionario->nome_funcionario); ?>">
                                         <?php echo form_error('nome_funcionario', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
                                     <div class="containerInput">
                                         <a>Sobrenome</a><input type="text" class="form-control" name="sobrenome"
-                                            placeholder="Sobrenome" value="<?php echo $funcionario->sobrenome ?>">
+                                            placeholder="Sobrenome"
+                                            value="<?php echo base64_decode($funcionario->sobrenome); ?>">
                                         <?php echo form_error('sobrenome', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
                                     <div class="containerInput">
                                         <a>CPF</a><input type="text" class="form-control cpf" name="cpf"
-                                            placeholder="Cpf" value="<?php echo $funcionario->cpf ?>">
+                                            placeholder="Cpf" value="<?php echo base64_decode($funcionario->cpf); ?>">
                                         <?php echo form_error('cpf', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
                                     <div class="containerInput" style="width: 300px;">
                                         <a>Email</a><input type="email" class="form-control" name="email"
-                                            placeholder="Email" value="<?php echo $funcionario->email ?>">
+                                            placeholder="Email"
+                                            value="<?php echo base64_decode($funcionario->email); ?>">
                                         <?php echo form_error('email', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
                                     <div class="containerInput" style="width: 300px;">
                                         <a>Endereço</a><input type="text" class="form-control" name="endereco"
-                                            placeholder="Endereço" value="<?php echo $funcionario->endereco ?>">
+                                            placeholder="Endereço"
+                                            value="<?php echo base64_decode($funcionario->endereco); ?>">
                                         <?php echo form_error('endereco', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
                                     <div class="containerInput">
                                         <a>Telefone</a><input type="text" class="form-control sp_celphones"
                                             name="telefone_fixo" placeholder="Telefone"
-                                            value="<?php echo $funcionario->telefone_fixo ?>">
+                                            value="<?php echo base64_decode($funcionario->telefone_fixo); ?>">
                                         <?php echo form_error('telefone_fixo', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
 
@@ -140,23 +158,25 @@ $this->load->view('layout/sidebar');
                                     <div class="containerInput">
                                         <a>Celular</a><input type="text" class="form-control sp_celphones"
                                             name="telefone_movel" placeholder="Celular"
-                                            value="<?php echo $funcionario->telefone_movel ?>">
+                                            value="<?php echo base64_decode($funcionario->telefone_movel); ?>">
                                         <?php echo form_error('telefone_movel', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
                                     <div class="containerInput">
                                         <a>RG</a><input type="text" class="form-control rg" name="rg" placeholder="RG"
-                                            value="<?php echo $funcionario->rg ?>">
+                                            value="<?php echo base64_decode($funcionario->rg); ?>">
                                         <?php echo form_error('rg', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
                                     <div class="containerInput">
                                         <a>Cargo</a><input type="text" class="form-control" name="cargo"
-                                            placeholder="cargo" value="<?php echo $funcionario->cargo ?>">
+                                            placeholder="cargo"
+                                            value="<?php echo base64_decode($funcionario->cargo); ?>">
                                         <?php echo form_error('cargo', '<small class="form-text text-danger">', '</small>'); ?>
                                     </div>
                                     <div class="containerInput">
                                         <label class="small my-0">Data de nascimento</label>
                                         <input type="date" class="form-control form-control-user-date"
-                                            name="data_nascimento" value="<?php echo $funcionario->data_nascimento ?>">
+                                            name="data_nascimento"
+                                            value="<?php echo base64_decode($funcionario->data_nascimento); ?>">
                                     </div>
                                     <div class="containerInput">
                                         <a>Sexo</a>

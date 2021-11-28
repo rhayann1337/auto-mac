@@ -21,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -127,17 +127,18 @@ $this->load->view('layout/sidebar');
 
                             <div class="col-md-4">
                                 <label>Cargo</label>
-                                <input type="text" class="form-control" name="cargo" placeholder="cargo"
+                                <input type="text" class="form-control" name="cargo" placeholder="Cargo"
                                     value="<?php echo set_value('cargo'); ?>">
                                 <?php echo form_error('cargo', '<small class="form-text text-danger">', '</small>'); ?>
 
                             </div>
 
                             <div class="col-md-4" style="margin-top: 48px;">
-                                <label>Imagem</label>
-                                <input type="file" name="foto" />
-                                <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
-
+                                <div class="containerImagem">
+                                    <label for='foto'>Selecionar uma foto &#187;</label>
+                                    <input type="file" name="foto" id="foto" />
+                                    <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
+                                </div>
                             </div>
 
                         </div>
@@ -154,6 +155,19 @@ $this->load->view('layout/sidebar');
     <style>
     .col-md-4 {
         padding: 16px;
+    }
+
+    .col-md-4 input[type='file'] {
+        display: none
+    }
+
+    .containerImagem label {
+        background-color: #3498db;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        margin: 10px;
+        padding: 6px 20px
     }
     </style>
 </body>

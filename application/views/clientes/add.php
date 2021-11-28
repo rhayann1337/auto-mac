@@ -21,9 +21,9 @@ $this->load->view('layout/sidebar');
 
         <?php
 
-    $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar');
 
-    ?>
+        ?>
 
         <div class="container-fluid">
 
@@ -66,6 +66,14 @@ $this->load->view('layout/sidebar');
                                 <input type="text" class="form-control" name="endereco" placeholder="Endereço"
                                     value="<?php echo set_value('endereco'); ?>">
                                 <?php echo form_error('endereco', '<small class="form-text text-danger">', '</small>'); ?>
+
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Placa</label>
+                                <input type="text" class="form-control" name="placa" placeholder="Placa"
+                                    value="<?php echo set_value('placa'); ?>">
+                                <?php echo form_error('placa', '<small class="form-text text-danger">', '</small>'); ?>
 
                             </div>
 
@@ -113,21 +121,16 @@ $this->load->view('layout/sidebar');
                                 <?php echo form_error('veiculo', '<small class="form-text text-danger">', '</small>'); ?>
 
 
-                                <div class="col-md-4">
-                                    <label>Placa</label>
-                                    <input type="text" class="form-control" name="placa" placeholder="Placa"
-                                        value="<?php echo set_value('placa'); ?>">
-                                    <?php echo form_error('placa', '<small class="form-text text-danger">', '</small>'); ?>
 
-                                </div>
 
 
 
                             </div>
 
                         </div>
-
-                        <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        <div class="containerButton">
+                            <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -140,6 +143,12 @@ $this->load->view('layout/sidebar');
     <style>
     .col-md-4 {
         padding: 16px;
+    }
+
+    .containerButton {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     </style>
 </body>

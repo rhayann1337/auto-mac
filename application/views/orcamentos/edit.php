@@ -65,7 +65,7 @@ $this->load->view('layout/sidebar');
                                             <?php foreach ($funcionarios as $funcionario) : ?>
                                             <option value="<?php echo $funcionario->id; ?>"
                                                 <?php echo ($funcionario->id != NULL) ? 'selected' : ''; ?>>
-                                                <?php echo $funcionario->nome_funcionario; ?></option>
+                                                <?php echo base64_decode($funcionario->nome_funcionario); ?></option>
                                             <?php endforeach; ?>
                                         </select>
                                     </div>

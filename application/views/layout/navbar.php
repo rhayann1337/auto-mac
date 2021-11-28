@@ -36,7 +36,7 @@
                         <span class="badge badge-danger badge-counter">!</span>
                     </a>
                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                        aria-labelledby="alertsDropdown">
+                        aria-labelledby="alertsDropdown" style="z-index: 9999999999999999;">
                         <h6 class="dropdown-header">
                             Central de notificações
                         </h6>

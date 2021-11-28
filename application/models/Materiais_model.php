@@ -36,7 +36,7 @@ class Materiais_model extends CI_Model
     }
 
 
-    public function gerar_relatorio_materiais($data_inicial = NULL, $data_final = NULL)
+    public function gerar_relatorio_materiais()
     {
         $this->db->select([
             'materiais.*',
@@ -44,15 +44,6 @@ class Materiais_model extends CI_Model
         ]);
 
         $this->db->join('fornecedores', 'materiais.fornecedor_id = fornecedores.id', 'INNER');
-
-
-        if ($data_inicial && $data_final) {
-
-            $this->db->where("SUBSTR(data, 1, 10) >= '$data_inicial' AND  SUBSTR(data, 1, 10) <= '$data_final'");
-        } else {
-            $this->db->where("SUBSTR(data, 1, 10) >= '$data_inicial'");
-        }
-
         return $this->db->get('materiais')->result();
     }
 

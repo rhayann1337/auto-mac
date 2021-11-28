@@ -100,7 +100,7 @@ $this->load->view('layout/sidebar');
                                 <tr>
                                     <td><?php echo $servico->id ?></td>
                                     <td><?php echo $servico->nome_servico ?></td>
-                                    <td><?php echo $servico->nome_funcionario ?></td>
+                                    <td><?php echo base64_decode($servico->nome_funcionario); ?></td>
                                     <td><?php echo $servico->nome ?></td>
                                     <td class="sp_celphones"><?php echo $servico->telefone_movel ?></td>
                                     <td><?php echo $servico->placa ?></td>
@@ -163,7 +163,7 @@ $this->load->view('layout/sidebar');
                                                     <p><?php echo $servico->nome_servico ?></p>
                                                     <hr>
                                                     <h5>Nome do responsável</h5>
-                                                    <p><?php echo $servico->nome_funcionario ?></p>
+                                                    <p><?php echo base64_decode($servico->nome_funcionario); ?></p>
                                                     <hr>
                                                     <h5>Nome do cliente</h5>
                                                     <p><?php echo $servico->nome ?></p>

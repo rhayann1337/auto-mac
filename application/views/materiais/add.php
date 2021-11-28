@@ -102,34 +102,41 @@ $this->load->view('layout/sidebar');
 
                             </div>
 
-                        </div>
+                            <div class="form-group row mb-3">
 
+                                <div class="col-md-12">
+                                    <label>Observações do produto</label>
+                                    <textarea class="form-control form-control-user" style="width: 500px;"
+                                        name="observacoes" value="<?php echo set_value('observacoes'); ?>"></textarea>
+                                    <?php echo form_error('observacoes', '<small class="form-text text-danger">', '</small>'); ?>
+                                </div>
 
-
-
-                        <div class="form-group row mb-3">
-
-                            <div class="col-md-12">
-                                <label>Observações do produto</label>
-                                <textarea class="form-control form-control-user" style="width: 500px;"
-                                    name="observacoes" value="<?php echo set_value('observacoes'); ?>"></textarea>
-                                <?php echo form_error('observacoes', '<small class="form-text text-danger">', '</small>'); ?>
                             </div>
-
-                        </div>
-
-                        <div class="form-group row mb-3">
 
                             <div class="col-md-4">
-                                <label>Imagem</label>
-                                <input type="file" name="foto" />
-                                <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
+                                <div class="containerImagem">
+                                    <label for='foto'>Selecionar uma imagem &#187;</label>
+                                    <input type="file" name="foto" id="foto" />
+                                    <?php echo form_error('foto', '<small class="form-text text-danger">', '</small>'); ?>
+                                </div>
 
                             </div>
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-sm">Registrar</button>
+
+
+
+
+
+                        <div class="form-group row mb-3">
+
+
+
+                        </div>
+                        <div class="containerButton">
+                            <button type="submit" class="btn btn-primary btn-sm">Registrar</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -141,6 +148,27 @@ $this->load->view('layout/sidebar');
     <style>
     .col-md-4 {
         padding: 16px;
+    }
+
+    .col-md-4 input[type='file'] {
+        display: none
+    }
+
+    .containerImagem label {
+        background-color: #3498db;
+        border-radius: 5px;
+        color: #fff;
+        cursor: pointer;
+        margin: 10px;
+        padding: 6px 20px;
+        width: 200px;
+    }
+
+    .containerButton {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     </style>
 </body>

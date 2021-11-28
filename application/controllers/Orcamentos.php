@@ -211,7 +211,7 @@ class Orcamentos extends CI_Controller
 
             $html .= '<p style="font-size: 20px">'
                 . '<strong>Nome do cliente: </strong>' . $orcamento->nome . '<br/>' . '<br/>'
-                . '<strong>Nome de quem realizou o orçamento: </strong>' . $orcamento->nome_funcionario . '<br/>' . '<br/>'
+                . '<strong>Nome de quem realizou o orçamento: </strong>' . base64_decode($orcamento->nome_funcionario) . '<br/>' . '<br/>'
                 . '<strong>Placa do veículo: </strong>' . $orcamento->placa . '<br/>' . '<br/>'
                 . '<strong>Modelo do veículo: </strong>' . $orcamento->veiculo . '<br/>' . '<br/>'
                 . '<strong>Celular: </strong>' . $orcamento->telefone_movel . '<br/>' . '<br/>'

@@ -353,7 +353,7 @@ class Servicos extends CI_Controller
 
             $html .= '<p style="font-size: 20px">'
                 . '<strong>Nome do cliente: </strong>' . $servico->nome . '<br/>' . '<br/>'
-                . '<strong>Nome de quem realizou o serviço: </strong>' . $servico->nome_funcionario . '<br/>' . '<br/>'
+                . '<strong>Nome de quem realizou o serviço: </strong>' . base64_decode($servico->nome_funcionario) . '<br/>' . '<br/>'
                 . '<strong>Tipo de serviço: </strong>' . $servico->nome_servico . '<br/>' . '<br/>'
                 . '<strong>Placa do veículo: </strong>' . $servico->placa . '<br/>' . '<br/>'
                 . '<strong>Veículo: </strong>' . $servico->veiculo . '<br/>' . '<br/>'

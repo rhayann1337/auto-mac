@@ -84,17 +84,18 @@ class Funcionarios extends CI_Controller
 
                 $url_imagem = base_url($config['upload_path'] . $arquivo);
 
-                $nome = $this->input->post('nome_funcionario');
-                $sobrenome = $this->input->post('sobrenome');
-                $cpf = $this->input->post('cpf');
-                $email = $this->input->post('email');
-                $telefone_fixo = $this->input->post('telefone_fixo');
-                $telefone_movel = $this->input->post('telefone_movel');
-                $endereco = $this->input->post('endereco');
+                $nome = base64_encode($this->input->post('nome_funcionario'));
+                $sobrenome = base64_encode($this->input->post('sobrenome'));
+
+                $cpf = base64_encode($this->input->post('cpf'));
+                $email = base64_encode($this->input->post('email'));
+                $telefone_fixo = base64_encode($this->input->post('telefone_fixo'));
+                $telefone_movel = base64_encode($this->input->post('telefone_movel'));
+                $endereco = base64_encode($this->input->post('endereco'));
                 $sexo = $this->input->post('sexo');
-                $rg = $this->input->post('rg');
+                $rg = base64_encode($this->input->post('rg'));
                 $cargo = $this->input->post('cargo');
-                $data_nascimento = $this->input->post('data_nascimento');
+                $data_nascimento = base64_encode($this->input->post('data_nascimento'));
 
                 $data =
                     array(
@@ -109,7 +110,7 @@ class Funcionarios extends CI_Controller
                         'rg' => $rg,
                         'cargo' => $cargo,
                         'data_nascimento' => $data_nascimento,
-                        'foto' => $url_imagem
+                        'foto' => $url_imagem,
                     );
 
                 $data = html_escape($data);
@@ -139,6 +140,10 @@ class Funcionarios extends CI_Controller
                     ),
                     'funcionario' => $this->core_model->get_by_id('funcionarios', array('id' => $id)),
                 );
+
+                // echo '<pre>';
+                // print_r($this->input->post());
+                // exit();
 
                 $this->load->view('layout/header', $data);
                 $this->load->view('funcionarios/edit');
@@ -179,17 +184,17 @@ class Funcionarios extends CI_Controller
 
             $url_imagem = base_url($config['upload_path'] . $arquivo);
 
-            $nome = $this->input->post('nome_funcionario');
-            $sobrenome = $this->input->post('sobrenome');
-            $cpf = $this->input->post('cpf');
-            $email = $this->input->post('email');
-            $telefone_fixo = $this->input->post('telefone_fixo');
-            $telefone_movel = $this->input->post('telefone_movel');
-            $endereco = $this->input->post('endereco');
+            $nome = base64_encode($this->input->post('nome_funcionario'));
+            $sobrenome = base64_encode($this->input->post('sobrenome'));
+            $cpf = base64_encode($this->input->post('cpf'));
+            $email = base64_encode($this->input->post('email'));
+            $telefone_fixo = base64_encode($this->input->post('telefone_fixo'));
+            $telefone_movel = base64_encode($this->input->post('telefone_movel'));
+            $endereco = base64_encode($this->input->post('endereco'));
             $sexo = $this->input->post('sexo');
-            $rg = $this->input->post('rg');
+            $rg = base64_encode($this->input->post('rg'));
             $cargo = $this->input->post('cargo');
-            $data_nascimento = $this->input->post('data_nascimento');
+            $data_nascimento = base64_encode($this->input->post('data_nascimento'));
 
             $data =
                 array(

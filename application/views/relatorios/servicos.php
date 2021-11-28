@@ -9,37 +9,39 @@
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url('/') ?>">Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?php echo $titulo ?></li>
             </ol>
         </nav>
-        
-         <?php if ($this->session->flashdata('info')) : $message = $this->session->flashdata('info') ?>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong><i class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;<?php echo $message ?></strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+
+        <?php if ($this->session->flashdata('info')) : $message = $this->session->flashdata('info') ?>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong><i class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;<?php echo $message ?></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             </div>
+        </div>
         <?php endif; ?>
 
         <div class="card shadow mb-4">
             <div class="card-body">
-               <form action="" class="user" name="form_servicos" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+                <form action="" class="user" name="form_servicos" enctype="multipart/form-data" method="post"
+                    accept-charset="utf-8">
 
                     <fieldset class="mt-4 border p-2">
 
-                        <legend class="font-small"><i class="fas fa-calendar-alt"></i></i>&nbsp;&nbsp;Escolhas as datas</legend>
+                        <legend class="font-small"><i class="fas fa-calendar-alt"></i></i>&nbsp;&nbsp;Escolhas as datas
+                        </legend>
 
                         <div class="form-group row">
 
                             <div class="col-sm-6 mb-1 mb-sm-0">
                                 <label class="small my-0">Data inicial</label>
-                                <input type="date" class="form-control form-control-user-date" name="data_inicial" required="">
+                                <input type="date" class="form-control form-control-user-date" name="data_inicial"
+                                    required="">
                             </div>
 
                             <div class="col-sm-6 mb-1 mb-sm-0">
